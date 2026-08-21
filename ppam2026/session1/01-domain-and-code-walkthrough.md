@@ -15,54 +15,54 @@ simulator's `k_s` must converge to it as dose per pulse goes to zero.
 Why this can't be a smooth-density diffusion problem: recombination is an
 interaction between individual positive and negative ion pairs, so the
 simulator seeds the grid with discrete Gaussian tracks (one per proton) and
-integrates the coupled drift-diffusion-recombination PDE
-(`ion_chamber/solver.py`) with explicit Lax-Wendroff finite differences.
-
-## Reading order
-
-1. `ion_chamber/config.py` — beam, chamber, and grid parameters, and what's
-   derived from them (time step, track count).
-2. `ion_chamber/solver.py` — the solver itself. Point out where it's
-   correct but naive; don't say where the time actually goes yet, that's
-   this afternoon's measurement, not a spoiler for the walkthrough.
-3. `ion_chamber/theory.py` — the Jaffe closed form, independent of the
-   grid.
-4. `tests/test_correctness.py` — how "still correct" gets checked after
-   every change made today.
-
-## Worth saying out loud, not just showing
-
-- Why per-track simulation instead of a smooth source term.
-- Why the grid is a small, fast, representative sub-volume rather than a
-  full chamber (the top-level README's physics note covers this — worth
-  reading aloud once).
-- That `bench.py` and `sweep.py` exist so nobody has to hand-write timing
-  code before lunch.
+integrates the coupled drift-diffusion-recombination PDE with explicit
+Lax-Wendroff finite differences.
 
 ## Scales that matter
 
-Numbers below are from `SimulationConfig()`'s defaults — the kind of
-concrete quantities worth putting on screen for a computer-science
-audience.
+These are the actual numbers behind the default config
+(`SimulationConfig()`).
 
-- **Mesh.** 20 × 20 × 206 voxels at 10 µm/voxel → 200 µm × 200 µm × 2.06 mm.
-  The z-extent already matches the real 2 mm electrode gap plus a 6-voxel
-  electrode buffer; the lateral extent is the part that's shrunk down.
-- **Why bigger grids matter.** A real Markus-chamber collecting electrode
-  has a radius of ~2.65 mm, not the toy config's 60 µm sampled disc (44×
-  larger). Keep the same voxel size and z-extent and scale the lateral
-  extent up to that: 538 × 538 × 206 voxels (5.38 mm × 5.38 mm × 2.06 mm) —
-  ~730× the memory (1.8 GiB vs. 2.5 MiB) and, because the number of tracks
-  scales with area, ~1950× the tracks injected per pulse (178M vs. 91k).
-  That gap between "runs on a laptop" and "resolves an actual detector" is
-  why the performance work this afternoon isn't academic.
-- **Time step.** dt = 383 ns, set by the von Neumann stability limit of the
-  explicit scheme on a 10 µm voxel (diffusion and drift both constrain it —
-  not an arbitrary round number).
-- **Run length.** 1622 steps ≈ 621 µs of simulated time: one 540 µs
-  macropulse (1412 steps) plus a 210-step clearance tail, long enough for
-  drifting charge to finish leaving the gap.
-- **Where that sits physically.** dt (383 ns) ≪ pulse (540 µs) ≪ pulse
-  period (20 ms at 50 Hz) ≪ a treatment session (minutes). The solver only
-  has to resolve the first two; nothing past the clearance tail affects
-  `k_s`.
+### Space
+
+| | Default (this workshop) | Full detector scale |
+|---|---|---|
+| Sampled radius | 60 µm | 2.65 mm (44×) |
+| Grid, x × y × z | 20 × 20 × 206 voxels | 538 × 538 × 206 voxels |
+| Physical size | 200 µm × 200 µm × 2.06 mm | 5.38 mm × 5.38 mm × 2.06 mm |
+| Voxel size | 10 µm | 10 µm |
+| Peak memory | 2.5 MiB | 1.8 GiB (~730×) |
+| Tracks per pulse | 91 k | 178 M (~1950×) |
+
+The z-extent (2.06 mm) already matches a real 2 mm electrode gap plus a
+6-voxel electrode buffer — only the lateral extent is shrunk down. Scaling
+that up to a real Markus-chamber collecting-electrode radius is the gap
+between "runs on a laptop" and "resolves an actual detector," which is why
+the performance work this afternoon isn't academic.
+
+### Time
+
+| Quantity | Value |
+|---|---|
+| Time step dt | 383 ns (von Neumann stability limit, 10 µm voxel) |
+| One macropulse | 540 µs (1412 steps) |
+| Clearance tail | 80 µs (210 steps) |
+| Total simulated time | 621 µs (1622 steps) |
+| Pulse period (50 Hz) | 20 ms |
+| Typical treatment session | minutes |
+
+dt ≪ pulse ≪ pulse period ≪ treatment session. The solver only has to
+resolve the first two; nothing past the clearance tail changes `k_s`.
+
+## Reading order
+
+1. [`ion_chamber/config.py`](../../ion_chamber/config.py) — beam, chamber,
+   and grid parameters, and what's derived from them (time step, track
+   count).
+2. [`ion_chamber/solver.py`](../../ion_chamber/solver.py) — the solver
+   itself. Correct but deliberately naive — you'll find out exactly where
+   the time goes this afternoon, once you profile it yourself.
+3. [`ion_chamber/theory.py`](../../ion_chamber/theory.py) — the Jaffe
+   closed form, independent of the grid.
+4. [`tests/test_correctness.py`](../../tests/test_correctness.py) — how
+   "still correct" gets checked after every change made today.
