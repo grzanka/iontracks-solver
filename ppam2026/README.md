@@ -40,24 +40,29 @@ The full tutorial writeup, including the detailed agenda below, is in
 ## Tutorial agenda
 
 **11:00–13:30 — Infrastructure, safety, and diagnosis**
+([materials](session1/))
 
 - Introduction to the domain problem, and a walkthrough of the naive
   implementation of the PDE solver.
+  ([notes](session1/01-domain-and-code-walkthrough.md))
 - Cyfronet-hosted LLMs: why running GLM 5.2 on-premises matters — free at
   this scale, data never leaves the cluster, coding ability similar to
-  Claude Sonnet's.
+  Claude Sonnet's. ([notes](session1/02-why-onprem-llms.md))
 - Using an agent safely: permission modes, reviewing diffs before accepting
   them, git commits as checkpoints, never approving destructive commands or
   job submissions blindly — the rules for the rest of the day.
+  ([notes](session1/03-agent-safety-rules.md))
 - Setup: Athena account, opencode + GLM 5.2 token, a quick "hello agent"
   test — and the day's submission rule: the agent drafts job scripts,
   participants review and submit them by hand.
+  ([checklist](session1/04-setup.md))
 - Orientation: the problem we're solving, how the starting code works, and
   the materials everyone begins with — the code itself, a way to measure
   performance, and a way to check the results are still correct.
 - Hands-on: treat the agent as a lab assistant, not an author — "run the
   sweep, plot wall time and speedup vs. thread count, explain the shape" —
   and write a short diagnosis based on the output.
+  ([exercise](session1/05-exercise-diagnosis.md))
 
 **14:20–16:00 — Optimization: algorithmic and hardware-aware**
 
