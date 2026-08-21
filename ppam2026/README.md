@@ -4,11 +4,6 @@ A tutorial at [PPAM 2026](https://ppam.edu.pl/) (16th International Conference
 on Parallel Processing and Applied Mathematics), given by **Klemens Noga** and
 **Leszek Grzanka** (ACK Cyfronet AGH, EuroCC3).
 
-This directory is the landing page for the tutorial. The rest of this
-repository — `ion_chamber/`, `bench.py`, `sweep.py`, `tests/` — *is* the
-naive implementation participants work on. Start with the [top-level
-README](../README.md) for the code itself; this page covers the tutorial.
-
 ## Abstract
 
 "Vibe coding" — letting an AI agent produce software mostly on its own,
@@ -91,26 +86,12 @@ Tutorials day at the Lecture Center of the Poznań University of Technology.
 | Time | Session |
 |---|---|
 | from 10:40 | Registration — Lecture Center of the Poznań University of Technology |
-| from 11:00 | **Tutorials** (parallel tracks, see below) |
+| from 11:00 | **Tutorials** |
 | 13:30–14:20 | Lunch |
 | from 14:20 | Continuation of classes |
 | 16:00–16:30 | Coffee break |
 | 16:30–18:00 | Continuation of classes |
 | from 19:30 | Concert at the Lecture Center and welcome reception at Poznań Supercomputing and Networking Center, including a tour of the supercomputing facilities |
-
-Tutorial tracks running that day:
-
-- **Quantum Computing** — Poznań Supercomputing and Networking Center
-- **Porting scientific applications to RISC-V vector architectures** — Barcelona
-  Supercomputing Center (Filippo Mantovani and Pablo Vizcaino)
-- **Practical Roofline Analysis by Example** — University of Erlangen-Nuremberg,
-  Germany (Georg Hager and Jan Laukemann)
-- **Building LLM Applications With Prompt Engineering** — Jan Kwapisz, Warsaw
-  University
-- **Dynamic Resource Management for HPC** — Sergio Iserte (BSC) and Dominik
-  Huber (TUM)
-- **Performance Engineering with a Coding Agent: A Real HPC Case Study** — Klemens
-  Noga and Leszek Grzanka (ACK Cyfronet AGH, EuroCC3) — *this tutorial*
 
 ## Materials
 
