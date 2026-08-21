@@ -101,6 +101,8 @@ exercise runs inside.
 Starting points, not a script — adapt them to what the agent's already
 told you.
 
+### Performance
+
 - "Run `bench.py` under `cProfile` and summarize the top 10 functions by
   cumulative time. I want to know where the time goes, not just the
   total."
@@ -112,6 +114,28 @@ told you.
   the speedup curve looks the way it does — cite the actual numbers, not
   Amdahl's law in the abstract."
 - "Run `pytest` and confirm the answer didn't change, only the timing."
+
+### Data exploration
+
+`bench.py` only prints the final numbers — the `Result` object it
+discards (`time_s`, `f_t`, `ks`, `positive_array`, `negative_array`, see
+[`ion_chamber/state.py`](../../ion_chamber/state.py)) has the rest. Have
+the agent write a small standalone script that calls `run_simulation`
+directly to get at it — that's exploration, not the afternoon's "change
+the solver."
+
+- "Write a short script that calls `run_simulation` directly with the
+  default config and plots `f_t` (collection efficiency) against
+  `time_s`. I want to see the pulse and the clearance tail as visibly
+  distinct regions on the charge-evolution curve."
+- "From that same run, plot `k_s(t) = 1/f_t(t)` over time and tell me
+  roughly when it's converged versus still settling."
+- "Take the final `positive_array` and `negative_array` and plot a 2D
+  slice through the mid-height of the gap, so I can see the radial ion
+  density profile left behind."
+- "Run it twice with `sampled_radius_cm` (or `dose_rate_Gy_s`) at two
+  different values and plot both charge-evolution curves together — does
+  the shape change, or just the final `k_s`?"
 
 ## What "done" looks like
 
