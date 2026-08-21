@@ -13,17 +13,85 @@ changes yet — that's the afternoon session.
 - `tests/test_correctness.py` — checks against Jaffe theory; run it once
   now so everyone starts from a known-good baseline.
 
+## Get set up on the node
+
+Log in:
+
+```bash
+ssh tutorialXXX@athena.cyfronet.pl
+```
+
+The login node isn't for running anything — grab an interactive node with
+real CPUs (ask an organizer for the actual `-A` grant if the one below
+doesn't work):
+
+```bash
+srun -C memfs --pty --time=2:00:00 -A <your-grant> -p plgrid-gpu-a100 --gres=gpu:a100:1 --cpus-per-task=32 --mem=80G bash
+```
+
+Clone the repo onto scratch:
+
+```bash
+cd $SCRATCH
+```
+
+```bash
+git clone https://github.com/grzanka/iontracks-solver.git
+```
+
+```bash
+cd iontracks-solver
+```
+
+Create and activate a virtualenv, then install the project:
+
+```bash
+python -m venv venv
+```
+
+```bash
+source venv/bin/activate
+```
+
+```bash
+pip install -e ".[dev]"
+```
+
+Your prompt should now show `(venv)`. That's what the rest of this
+exercise runs inside.
+
 ## Task
 
-1. Run `pytest` once. Confirm green before touching anything else.
-2. Run `python bench.py`. Note the wall time and `k_s`.
-3. Ask the agent to profile a `bench.py` run — don't assume the
-   parallelised loop is the hot path, check.
-4. Run `python sweep.py --threads 1 2 4 8 --out sweep.csv` (adjust the
-   thread list to Athena's actual core count — have the agent check it
-   rather than guessing).
+1. Confirm the baseline is still correct:
+
+   ```bash
+   pytest
+   ```
+
+2. Time a single run:
+
+   ```bash
+   python bench.py
+   ```
+
+   Note the wall time and `k_s`.
+
+3. Ask the agent to profile that same run — don't assume the parallelised
+   loop is the hot path, check.
+
+4. Sweep thread counts:
+
+   ```bash
+   python sweep.py --threads 1 2 4 8 --out sweep.csv
+   ```
+
+   Adjust the thread list to this node's actual core count (`nproc`, or
+   whatever `--cpus-per-task` you got from `srun`) — have the agent check
+   it rather than guessing.
+
 5. Have the agent plot wall time and speedup vs. thread count from
    `sweep.csv`.
+
 6. Write three to five sentences: where the time goes, whether adding
    threads helps, and why — grounded in what the profiler and plot showed,
    not in Amdahl's law recited from memory.
@@ -51,3 +119,17 @@ A plot, a profiler summary, and a short written diagnosis you could hand
 to someone else and have them understand what's slow and why, without
 reading the code themselves. That diagnosis is what gets compared against
 the reference solution in the 16:30 synthesis.
+
+## Wrapping up
+
+Leave things clean for the next exercise:
+
+```bash
+deactivate
+```
+
+```bash
+exit
+```
+
+The second `exit` leaves the `srun` shell and frees the node.
