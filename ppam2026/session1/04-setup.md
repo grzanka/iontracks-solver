@@ -1,5 +1,7 @@
 # Setup
 
+*[↑ Session 1](README.md) · [← Prev: Ground rules](03-agent-safety-rules.md) · [Next: Exercise →](05-exercise-diagnosis.md)*
+
 Get this done before 11:00 if possible — the session doesn't have much
 slack for account provisioning.
 

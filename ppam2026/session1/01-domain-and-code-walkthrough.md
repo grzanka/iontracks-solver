@@ -1,5 +1,7 @@
 # Domain problem and code walkthrough
 
+*[↑ Session 1](README.md) · Prev: — · [Next: Why an on-prem LLM →](02-why-onprem-llms.md)*
+
 Talking points for the first walkthrough, before anyone opens the agent.
 
 ## The problem
@@ -36,3 +38,31 @@ integrates the coupled drift-diffusion-recombination PDE
   reading aloud once).
 - That `bench.py` and `sweep.py` exist so nobody has to hand-write timing
   code before lunch.
+
+## Scales that matter
+
+Numbers below are from `SimulationConfig()`'s defaults — the kind of
+concrete quantities worth putting on screen for a computer-science
+audience.
+
+- **Mesh.** 20 × 20 × 206 voxels at 10 µm/voxel → 200 µm × 200 µm × 2.06 mm.
+  The z-extent already matches the real 2 mm electrode gap plus a 6-voxel
+  electrode buffer; the lateral extent is the part that's shrunk down.
+- **Why bigger grids matter.** A real Markus-chamber collecting electrode
+  has a radius of ~2.65 mm, not the toy config's 60 µm sampled disc (44×
+  larger). Keep the same voxel size and z-extent and scale the lateral
+  extent up to that: 538 × 538 × 206 voxels (5.38 mm × 5.38 mm × 2.06 mm) —
+  ~730× the memory (1.8 GiB vs. 2.5 MiB) and, because the number of tracks
+  scales with area, ~1950× the tracks injected per pulse (178M vs. 91k).
+  That gap between "runs on a laptop" and "resolves an actual detector" is
+  why the performance work this afternoon isn't academic.
+- **Time step.** dt = 383 ns, set by the von Neumann stability limit of the
+  explicit scheme on a 10 µm voxel (diffusion and drift both constrain it —
+  not an arbitrary round number).
+- **Run length.** 1622 steps ≈ 621 µs of simulated time: one 540 µs
+  macropulse (1412 steps) plus a 210-step clearance tail, long enough for
+  drifting charge to finish leaving the gap.
+- **Where that sits physically.** dt (383 ns) ≪ pulse (540 µs) ≪ pulse
+  period (20 ms at 50 Hz) ≪ a treatment session (minutes). The solver only
+  has to resolve the first two; nothing past the clearance tail affects
+  `k_s`.

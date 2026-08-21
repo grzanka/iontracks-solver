@@ -1,5 +1,7 @@
 # Exercise: diagnose before you optimize
 
+*[↑ Session 1](README.md) · [← Prev: Setup](04-setup.md) · Next: —*
+
 The only goal this morning is a measurement-backed diagnosis. No code
 changes yet — that's the afternoon session.
 
@@ -25,6 +27,23 @@ changes yet — that's the afternoon session.
 6. Write three to five sentences: where the time goes, whether adding
    threads helps, and why — grounded in what the profiler and plot showed,
    not in Amdahl's law recited from memory.
+
+## Example prompts
+
+Starting points, not a script — adapt them to what the agent's already
+told you.
+
+- "Run `bench.py` under `cProfile` and summarize the top 10 functions by
+  cumulative time. I want to know where the time goes, not just the
+  total."
+- "Before we talk about thread counts, check how many CPU cores and how
+  much cache this node actually has."
+- "Run `sweep.py` with `--threads` from 1 up to this node's core count,
+  write `sweep.csv`, and plot wall time and speedup vs. thread count."
+- "Given the profiler output and that plot, explain in a few sentences why
+  the speedup curve looks the way it does — cite the actual numbers, not
+  Amdahl's law in the abstract."
+- "Run `pytest` and confirm the answer didn't change, only the timing."
 
 ## What "done" looks like
 

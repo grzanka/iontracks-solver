@@ -1,5 +1,7 @@
 # Ground rules for the day
 
+*[↑ Session 1](README.md) · [← Prev: Why an on-prem LLM](02-why-onprem-llms.md) · [Next: Setup →](04-setup.md)*
+
 State these before anyone points the agent at Athena. They don't change for
 the rest of the day.
 
