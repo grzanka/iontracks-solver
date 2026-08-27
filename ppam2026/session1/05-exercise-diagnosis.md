@@ -15,13 +15,10 @@ changes yet — that's the afternoon session.
 
 ## Get set up on the node
 
-Log in:
+You should already be on the Athena access node with `iontracks-solver`
+cloned into `$SCRATCH` from [setup](04-setup.md). If not, do that first.
 
-```bash
-ssh tutorialXXX@athena.cyfronet.pl
-```
-
-The login node isn't for running anything — grab an interactive node with
+The access node isn't for running anything — grab an interactive node with
 real CPUs (ask an organizer for the actual `-A` grant if the one below
 doesn't work):
 
@@ -29,18 +26,10 @@ doesn't work):
 srun -C memfs --pty --time=2:00:00 -A <your-grant> -p plgrid-gpu-a100 --gres=gpu:a100:1 --cpus-per-task=32 --mem=80G bash
 ```
 
-Clone the repo onto scratch:
+Move into the repo you cloned during setup:
 
 ```bash
-cd $SCRATCH
-```
-
-```bash
-git clone https://github.com/grzanka/iontracks-solver.git
-```
-
-```bash
-cd iontracks-solver
+cd $SCRATCH/iontracks-solver
 ```
 
 Create and activate a virtualenv, then install the project:

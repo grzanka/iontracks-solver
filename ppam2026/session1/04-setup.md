@@ -2,96 +2,105 @@
 
 *[↑ Session 1](README.md) · [← Prev: Ground rules](03-agent-safety-rules.md) · [Next: Exercise →](05-exercise-diagnosis.md)*
 
-Get this done before 11:00 if possible — the session doesn't have much
-slack for account provisioning.
+## Resources
 
-- [ ] **Get on Athena.** Two ways in, both give you real CPU and GPU
-      resources for the day:
-  - browser: <https://jupyterhub.athena.cyfronet.pl/>
-  - terminal: `ssh tutorialXXX@athena.cyfronet.pl` (replace `XXX` with the
-    number you were given at registration)
-- [ ] **opencode is already installed** on Athena for this workshop — no
-      install step needed. For docs (e.g. if you want it on your own
-      machine afterwards), see <https://opencode.ai/>.
-- [ ] **GLM 5.2 access is already configured** — your LLM Lab token is set
-      up for you, so opencode should talk to the model with no extra
-      configuration. If you want to see how that wiring works, or set it
-      up yourself later, there's a ready-made opencode + LLM Lab config at
-      <https://github.com/groundnuty/plgrid-llmlab-opencode>.
-- [ ] **Hello-agent test.** Open opencode in this repo and ask it to list
-      the files in `ion_chamber/` and summarize `solver.py` in three
-      sentences. If that works, the tool chain is fine.
-- [ ] **Re-read the submission rule** in
-      [`03-agent-safety-rules.md`](03-agent-safety-rules.md) — it applies
-      from the first job onward, not just the optimization session.
+- Athena supercomputer, hosted at ACK Cyfronet: XXX CPU nodes (?? cores,
+  ?? RAM each), YYY GPU nodes (ZZZ GPUs, model ??, ?? VRAM).
+- Access via SSH (terminal on Linux/macOS, PowerShell or a terminal app on
+  Windows) — the access node is reachable from the internet, worker nodes
+  are reached from there via SLURM interactive jobs.
+- LLM Lab inference service (LLM models hosted on Cyfronet hardware),
+  reachable both from Athena and from your own laptop, free for
+  scientists.
 
-Didn't get a `tutorialXXX` account or can't reach either endpoint above?
-Ask an organizer before 11:00, not after.
+## Accounts
 
-## Installing and configuring opencode yourself
+- Tutorial accounts, valid for a few days, are provided to participants —
+  they include access to Athena (including GPU nodes) and to LLM Lab.
+- If you already have a PLGrid account with Athena and LLM Lab activated,
+  these same materials work with that account instead.
+- You can also run everything on your own laptop, limited by whatever
+  hardware you have there — most likely no large core count.
 
-Not needed today — Athena already has this done for you. Use this if you
-want opencode on your own machine afterwards, or want to see how the
-workshop setup was built.
+## Software
 
-**Install.** Run the official installer:
+- **opencode** — an open-source "AI coding agent" terminal application (it
+  also has a GUI, unused today) that talks to both free inference services
+  (like Cyfronet's LLM Lab) and paid ones (like Claude).
+- **Visual Studio Code** — an open-source IDE; it can also be pointed at
+  LLM Lab.
+
+## Get set up
+
+### 1. Log into Athena
+
+```bash
+ssh tutorialXXX@athena.cyfronet.pl
+```
+
+Replace `XXX` with the number you were given at registration. This drops
+you on the Athena **access node** — expect a banner and a shell prompt;
+don't run anything heavier than `git` or `curl` here, actual computation
+happens later on a worker node via `srun`.
+
+### 2. Clone the exercise repo
+
+```bash
+cd $SCRATCH
+```
+
+```bash
+git clone https://github.com/grzanka/iontracks-solver.git
+```
+
+```bash
+cd iontracks-solver
+```
+
+`$SCRATCH` is shared storage visible from both the access node and worker
+nodes, so cloning here now means it's already in place once you `srun`
+into a compute node in the next exercise. `git clone` prints the usual
+"Cloning into 'iontracks-solver'... done" and a few progress lines; you
+should end up inside the checkout, with `ion_chamber/`, `bench.py`, and
+`opencode.json` all present (`ls` to confirm).
+
+### 3. Install opencode
 
 ```bash
 curl -fsSL https://opencode.ai/install | bash
 ```
 
-It downloads the `opencode` binary to `~/.opencode/bin/opencode` and adds
-that directory to your `PATH` by editing your shell's rc file (`.bashrc`,
-`.zshrc`, ...), so open a new shell (or `source` the rc file) before the
-`opencode` command is found. Pass `--no-modify-path` if you'd rather wire
-up `PATH` yourself.
+This downloads the `opencode` binary to `~/.opencode/bin/opencode` and
+adds that directory to your `PATH` by editing your shell's rc file
+(`.bashrc`, `.zshrc`, ...). Open a new shell — or log out and back in via
+SSH — before the `opencode` command is found.
 
-opencode's own config and state live outside that install directory. A
-project carries its own config as `opencode.json` and `.opencode/plugins/`
-at its root — that's what we use below, so the PLGrid setup only applies
-while you're working in this repo. (Login state is separate again: it's
-saved to `~/.local/share/opencode/auth.json` regardless.)
+opencode's own machine-wide config lives under your home directory, but
+this repo carries its own per-project config in `opencode.json` and
+`.opencode/plugins/` (already there from the clone above), which is what
+lets opencode talk to the Cyfronet-hosted LLM.
 
-**Configure it for PLGrid LLM Lab, per-project.** This is exactly what's
-already set up for you on Athena. The provider plugin and model/agent
-config come from
-[plgrid-llmlab-opencode](https://github.com/groundnuty/plgrid-llmlab-opencode)
-(that repo carries no LICENSE file); a copy of the two files that matter
-(`opencode.json` and `.opencode/plugins/plgrid.js` — its `AGENTS.md` is
-skipped) already lives at the root of *this* repo, so there's nothing to
-copy — just clone `iontracks-solver` (see
-[`05-exercise-diagnosis.md`](05-exercise-diagnosis.md) if you haven't
-yet) and run `opencode` from its root.
+### 4. Authenticate against LLM Lab
 
-The remaining step is getting an API key, and it depends on which kind of
-PLGrid account you have:
-
-- [ ] **Tutorial account (`tutorialXXX`) — what everyone here has.** These
-      accounts don't have access to <https://llmlab.plgrid.pl/>, so you
-      can't self-generate a key. An access token will be handed out by the
-      organizers during the session instead — use that.
-- [ ] **Your own PLGrid account, if you have one.** Activate the Forge
-      service at <https://portal.plgrid.pl/services/111>, then generate an
-      API key at <https://llmlab.plgrid.pl> under **Grants → Generate API
-      Key**.
-- [ ] Authenticate, pasting whichever key/token applies to you when
-      prompted:
+Grab your LLM Lab access token — organizers hand these out for tutorial
+accounts; on your own PLGrid account, generate one yourself at
+<https://llmlab.plgrid.pl> under **Grants → Generate API Key** (Forge must
+be activated first, at <https://portal.plgrid.pl/services/111>). Then run:
 
 ```bash
 opencode providers login -p plgrid
 ```
 
-- [ ] Verify it can see the PLGrid models:
+Paste the token when prompted. opencode confirms the login and stores it
+for future sessions — you won't be asked again on this account.
+
+### 5. Verify it can see the models
 
 ```bash
 opencode models plgrid
 ```
 
-The repo's README also documents which of its models actually do
-agentic work reliably (a few of the 15 don't support tool calls at all,
-and one is fast but has produced silently-wrong code) — worth a skim
-before you pick a default for real work.
+Expect a list of PLGrid-hosted models. We'll use **GLM 5.2** (xx context,
+yyy VRAM, comparable to Claude Sonnet in benchmarks) as the default.
 
-opencode also supports a machine-wide config under `~/.config/opencode/`,
-applying to every project at once — not covered here, since this training
-sticks to the per-project setup above.
+You're set — head to the [exercise](05-exercise-diagnosis.md).
