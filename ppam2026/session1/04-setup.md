@@ -55,29 +55,27 @@ saved to `~/.local/share/opencode/auth.json` regardless.)
 **Configure it for PLGrid LLM Lab, per-project.** This is exactly what's
 already set up for you on Athena. The provider plugin and model/agent
 config come from
-[plgrid-llmlab-opencode](https://github.com/groundnuty/plgrid-llmlab-opencode);
-a copy of the two files that matter (`opencode.json` and
-`.opencode/plugins/plgrid.js` — its `AGENTS.md` is skipped) is vendored in
-this repo at [`opencode-plgrid/`](opencode-plgrid/), so you don't need to
-clone that repo separately — just this one (see
+[plgrid-llmlab-opencode](https://github.com/groundnuty/plgrid-llmlab-opencode)
+(that repo carries no LICENSE file); a copy of the two files that matter
+(`opencode.json` and `.opencode/plugins/plgrid.js` — its `AGENTS.md` is
+skipped) already lives at the root of *this* repo, so there's nothing to
+copy — just clone `iontracks-solver` (see
 [`05-exercise-diagnosis.md`](05-exercise-diagnosis.md) if you haven't
-cloned it yet):
+yet) and run `opencode` from its root.
 
-- [ ] Activate the Forge service on your PLGrid account at
-      <https://portal.plgrid.pl/services/111>, then generate an API key at
-      <https://llmlab.plgrid.pl> under **Grants → Generate API Key**.
-- [ ] From the root of your `iontracks-solver` checkout, drop the vendored
-      config into the project itself:
+The remaining step is getting an API key, and it depends on which kind of
+PLGrid account you have:
 
-```bash
-cp -r ppam2026/session1/opencode-plgrid/.opencode .
-```
-
-```bash
-cp ppam2026/session1/opencode-plgrid/opencode.json .
-```
-
-- [ ] Authenticate, pasting the API key you generated above when prompted:
+- [ ] **Tutorial account (`tutorialXXX`) — what everyone here has.** These
+      accounts don't have access to <https://llmlab.plgrid.pl/>, so you
+      can't self-generate a key. An access token will be handed out by the
+      organizers during the session instead — use that.
+- [ ] **Your own PLGrid account, if you have one.** Activate the Forge
+      service at <https://portal.plgrid.pl/services/111>, then generate an
+      API key at <https://llmlab.plgrid.pl> under **Grants → Generate API
+      Key**.
+- [ ] Authenticate, pasting whichever key/token applies to you when
+      prompted:
 
 ```bash
 opencode providers login -p plgrid

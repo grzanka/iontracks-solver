@@ -1,5 +1,10 @@
 // PLGrid Forge (ACK Cyfronet) - unofficial opencode provider plugin.
 //
+// Vendored from https://github.com/groundnuty/plgrid-llmlab-opencode
+// (that repo carries no LICENSE file) for PPAM 2026 workshop use — see
+// ppam2026/session1/04-setup.md. Already at <project>/.opencode/plugins/
+// here, so no copying is needed; just authenticate as described there.
+//
 // Drop this file into one of:
 //   <project>/.opencode/plugins/      - this project only
 //   ~/.config/opencode/plugins/       - every project on this machine
