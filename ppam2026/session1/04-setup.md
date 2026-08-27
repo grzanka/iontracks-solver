@@ -27,3 +27,74 @@ slack for account provisioning.
 
 Didn't get a `tutorialXXX` account or can't reach either endpoint above?
 Ask an organizer before 11:00, not after.
+
+## Installing and configuring opencode yourself
+
+Not needed today — Athena already has this done for you. Use this if you
+want opencode on your own machine afterwards, or want to see how the
+workshop setup was built.
+
+**Install.** Run the official installer:
+
+```bash
+curl -fsSL https://opencode.ai/install | bash
+```
+
+It downloads the `opencode` binary to `~/.opencode/bin/opencode` and adds
+that directory to your `PATH` by editing your shell's rc file (`.bashrc`,
+`.zshrc`, ...), so open a new shell (or `source` the rc file) before the
+`opencode` command is found. Pass `--no-modify-path` if you'd rather wire
+up `PATH` yourself.
+
+opencode's own config and state live outside that install directory,
+following the usual XDG split:
+
+- `~/.config/opencode/` — config: `opencode.json`, plus a `plugins/`
+  directory for provider plugins
+- `~/.local/share/opencode/` — state, including `auth.json`, where login
+  credentials are stored
+
+**Configure it for PLGrid LLM Lab.** This is exactly what's already set up
+for you on Athena. The
+[plgrid-llmlab-opencode](https://github.com/groundnuty/plgrid-llmlab-opencode)
+repo packages a provider plugin plus tuned agents and models for the PLGrid
+Forge gateway:
+
+- [ ] Activate the Forge service on your PLGrid account at
+      <https://portal.plgrid.pl/services/111>, then generate an API key at
+      <https://llmlab.plgrid.pl> under **Grants → Generate API Key**.
+- [ ] Clone the repo:
+
+```bash
+git clone https://github.com/groundnuty/plgrid-llmlab-opencode.git
+```
+
+- [ ] Install its config machine-wide:
+
+```bash
+cp plgrid-llmlab-opencode/.opencode/plugins/plgrid.js ~/.config/opencode/plugins/
+```
+
+```bash
+cp plgrid-llmlab-opencode/opencode.json ~/.config/opencode/opencode.json
+```
+
+  (or copy `.opencode/`, `AGENTS.md`, and `opencode.json` into a single
+  project instead, if you'd rather scope it there — see the repo's README
+  for that variant.)
+- [ ] Authenticate, pasting the API key you generated above when prompted:
+
+```bash
+opencode providers login -p plgrid
+```
+
+- [ ] Verify it can see the PLGrid models:
+
+```bash
+opencode models plgrid
+```
+
+The repo's README also documents which of its models actually do
+agentic work reliably (a few of the 15 don't support tool calls at all,
+and one is fast but has produced silently-wrong code) — worth a skim
+before you pick a default for real work.
