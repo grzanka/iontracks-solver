@@ -55,33 +55,34 @@ following the usual XDG split:
   credentials are stored
 
 **Configure it for PLGrid LLM Lab.** This is exactly what's already set up
-for you on Athena. The
-[plgrid-llmlab-opencode](https://github.com/groundnuty/plgrid-llmlab-opencode)
-repo packages a provider plugin plus tuned agents and models for the PLGrid
-Forge gateway:
+for you on Athena. The provider plugin and model/agent config come from
+[plgrid-llmlab-opencode](https://github.com/groundnuty/plgrid-llmlab-opencode);
+a copy of the two files that matter (`opencode.json` and
+`.opencode/plugins/plgrid.js` — its `AGENTS.md` is skipped) is vendored in
+this repo at [`opencode-plgrid/`](opencode-plgrid/), so you don't need to
+clone that repo separately — just this one (see
+[`05-exercise-diagnosis.md`](05-exercise-diagnosis.md) if you haven't
+cloned it yet):
 
 - [ ] Activate the Forge service on your PLGrid account at
       <https://portal.plgrid.pl/services/111>, then generate an API key at
       <https://llmlab.plgrid.pl> under **Grants → Generate API Key**.
-- [ ] Clone the repo:
+- [ ] Install the vendored config machine-wide:
 
 ```bash
-git clone https://github.com/groundnuty/plgrid-llmlab-opencode.git
-```
-
-- [ ] Install its config machine-wide:
-
-```bash
-cp plgrid-llmlab-opencode/.opencode/plugins/plgrid.js ~/.config/opencode/plugins/
+mkdir -p ~/.config/opencode/plugins
 ```
 
 ```bash
-cp plgrid-llmlab-opencode/opencode.json ~/.config/opencode/opencode.json
+cp ppam2026/session1/opencode-plgrid/.opencode/plugins/plgrid.js ~/.config/opencode/plugins/
 ```
 
-  (or copy `.opencode/`, `AGENTS.md`, and `opencode.json` into a single
-  project instead, if you'd rather scope it there — see the repo's README
-  for that variant.)
+```bash
+cp ppam2026/session1/opencode-plgrid/opencode.json ~/.config/opencode/opencode.json
+```
+
+  (or copy `opencode-plgrid/.opencode/` and `opencode-plgrid/opencode.json`
+  into a single project instead, if you'd rather scope it there.)
 - [ ] Authenticate, pasting the API key you generated above when prompted:
 
 ```bash
