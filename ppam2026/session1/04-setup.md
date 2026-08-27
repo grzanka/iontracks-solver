@@ -49,10 +49,15 @@ up `PATH` yourself.
 opencode's own config and state live outside that install directory,
 following the usual XDG split:
 
-- `~/.config/opencode/` — config: `opencode.json`, plus a `plugins/`
-  directory for provider plugins
+- `~/.config/opencode/` — machine-wide config: `opencode.json`, plus a
+  `plugins/` directory for provider plugins
 - `~/.local/share/opencode/` — state, including `auth.json`, where login
   credentials are stored
+
+A project can also carry its own `opencode.json` and `.opencode/plugins/`
+at its root, which opencode prefers over the machine-wide config when
+you run it from inside that project — that's the option used below, so
+the PLGrid setup only applies while you're working in this repo.
 
 **Configure it for PLGrid LLM Lab.** This is exactly what's already set up
 for you on Athena. The provider plugin and model/agent config come from
@@ -67,22 +72,19 @@ cloned it yet):
 - [ ] Activate the Forge service on your PLGrid account at
       <https://portal.plgrid.pl/services/111>, then generate an API key at
       <https://llmlab.plgrid.pl> under **Grants → Generate API Key**.
-- [ ] Install the vendored config machine-wide:
+- [ ] From the root of your `iontracks-solver` checkout, drop the vendored
+      config into the project itself:
 
 ```bash
-mkdir -p ~/.config/opencode/plugins
+cp -r ppam2026/session1/opencode-plgrid/.opencode .
 ```
 
 ```bash
-cp ppam2026/session1/opencode-plgrid/.opencode/plugins/plgrid.js ~/.config/opencode/plugins/
+cp ppam2026/session1/opencode-plgrid/opencode.json .
 ```
 
-```bash
-cp ppam2026/session1/opencode-plgrid/opencode.json ~/.config/opencode/opencode.json
-```
-
-  (or copy `opencode-plgrid/.opencode/` and `opencode-plgrid/opencode.json`
-  into a single project instead, if you'd rather scope it there.)
+  (copy them to `~/.config/opencode/` instead if you'd rather apply this
+  machine-wide, across every project.)
 - [ ] Authenticate, pasting the API key you generated above when prompted:
 
 ```bash
