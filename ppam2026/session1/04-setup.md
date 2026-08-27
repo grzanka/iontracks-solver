@@ -46,21 +46,15 @@ that directory to your `PATH` by editing your shell's rc file (`.bashrc`,
 `opencode` command is found. Pass `--no-modify-path` if you'd rather wire
 up `PATH` yourself.
 
-opencode's own config and state live outside that install directory,
-following the usual XDG split:
+opencode's own config and state live outside that install directory. A
+project carries its own config as `opencode.json` and `.opencode/plugins/`
+at its root — that's what we use below, so the PLGrid setup only applies
+while you're working in this repo. (Login state is separate again: it's
+saved to `~/.local/share/opencode/auth.json` regardless.)
 
-- `~/.config/opencode/` — machine-wide config: `opencode.json`, plus a
-  `plugins/` directory for provider plugins
-- `~/.local/share/opencode/` — state, including `auth.json`, where login
-  credentials are stored
-
-A project can also carry its own `opencode.json` and `.opencode/plugins/`
-at its root, which opencode prefers over the machine-wide config when
-you run it from inside that project — that's the option used below, so
-the PLGrid setup only applies while you're working in this repo.
-
-**Configure it for PLGrid LLM Lab.** This is exactly what's already set up
-for you on Athena. The provider plugin and model/agent config come from
+**Configure it for PLGrid LLM Lab, per-project.** This is exactly what's
+already set up for you on Athena. The provider plugin and model/agent
+config come from
 [plgrid-llmlab-opencode](https://github.com/groundnuty/plgrid-llmlab-opencode);
 a copy of the two files that matter (`opencode.json` and
 `.opencode/plugins/plgrid.js` — its `AGENTS.md` is skipped) is vendored in
@@ -83,8 +77,6 @@ cp -r ppam2026/session1/opencode-plgrid/.opencode .
 cp ppam2026/session1/opencode-plgrid/opencode.json .
 ```
 
-  (copy them to `~/.config/opencode/` instead if you'd rather apply this
-  machine-wide, across every project.)
 - [ ] Authenticate, pasting the API key you generated above when prompted:
 
 ```bash
@@ -101,3 +93,7 @@ The repo's README also documents which of its models actually do
 agentic work reliably (a few of the 15 don't support tool calls at all,
 and one is fast but has produced silently-wrong code) — worth a skim
 before you pick a default for real work.
+
+opencode also supports a machine-wide config under `~/.config/opencode/`,
+applying to every project at once — not covered here, since this training
+sticks to the per-project setup above.
