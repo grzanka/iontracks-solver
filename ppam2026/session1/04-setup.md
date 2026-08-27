@@ -45,23 +45,30 @@ happens later on a worker node via `srun`.
 
 ### 2. Clone the exercise repo
 
+`$SCRATCH` is shared storage visible from both the access node and worker
+nodes, so cloning here now means it's already in place once you `srun`
+into a compute node in the next exercise:
+
 ```bash
 cd $SCRATCH
 ```
+
+Clone the repo:
 
 ```bash
 git clone https://github.com/grzanka/iontracks-solver.git
 ```
 
+`git clone` prints the usual "Cloning into 'iontracks-solver'... done" and
+a few progress lines.
+
+Move into the checkout:
+
 ```bash
 cd iontracks-solver
 ```
 
-`$SCRATCH` is shared storage visible from both the access node and worker
-nodes, so cloning here now means it's already in place once you `srun`
-into a compute node in the next exercise. `git clone` prints the usual
-"Cloning into 'iontracks-solver'... done" and a few progress lines; you
-should end up inside the checkout, with `ion_chamber/`, `bench.py`, and
+You should now be inside it, with `ion_chamber/`, `bench.py`, and
 `opencode.json` all present (`ls` to confirm).
 
 ### 3. Install opencode
