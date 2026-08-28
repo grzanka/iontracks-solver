@@ -16,10 +16,10 @@ From inside `iontracks-solver`, with the venv still active:
 opencode
 ```
 
-This takes over the terminal with an interactive chat — the prompts
-below are things you type there, not in the shell. Anywhere a step below
-says **Terminal**, exit back out of opencode first (or use a second
-terminal into the same node).
+This takes over the terminal with an interactive chat. Every step below
+is a prompt you type there — the agent runs the actual commands (with
+your approval, see below), so you shouldn't need to leave this chat
+until [wrapping up](#wrapping-up).
 
 ## Expect permission prompts
 
@@ -76,9 +76,8 @@ works, one step at a time, instead of taking the final answer on faith.
    ```
    </details>
 
-2. **opencode**, then **Terminal**. Before trusting the `1 2 4 8` thread
-   list from the sweep in the previous file, check what this node
-   actually has:
+2. **opencode.** Before trusting the `1 2 4 8` thread list from the
+   sweep in the previous file, check what this node actually has:
 
    <details>
    <summary>Example prompt</summary>
@@ -110,13 +109,8 @@ works, one step at a time, instead of taking the final answer on faith.
 
    If the agent's answer is "spread across N NUMA nodes," that alone is
    worth a sentence in your diagnosis later — it explains why speedup
-   might stall well before your core count runs out. If it turns up more
-   *usable* cores than `1 2 4 8` covers, re-run the sweep yourself with
-   the corrected list (swap in the agent's numbers):
-
-   ```bash
-   python sweep.py --threads 1 2 4 8 16 --out sweep.csv
-   ```
+   might stall well before your core count runs out. Either way, have
+   it re-run the sweep with the corrected list next.
 
 3. **opencode.** Plot wall time and speedup vs. thread count from
    `sweep.csv`.
@@ -125,8 +119,9 @@ works, one step at a time, instead of taking the final answer on faith.
    <summary>Example prompt</summary>
 
    ```
-   Run sweep.py with --threads from 1 up to this node's core count,
-   write sweep.csv, and plot wall time and speedup vs. thread count.
+   Re-run sweep.py with --threads from 1 up to the number of cores
+   actually allocated to this job (not the whole node), write sweep.csv,
+   and plot wall time and speedup vs. thread count.
    ```
    </details>
 
