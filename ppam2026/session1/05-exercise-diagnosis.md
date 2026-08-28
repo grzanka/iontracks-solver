@@ -113,14 +113,57 @@ Run it and check for yourself — it'll be a much older release than the
 `GCC/14.3.0` loaded below.
 
 Load a current one through the module system instead. See what versions
-are actually available rather than taking the one below on faith:
+are actually available rather than taking the one below on faith
+(`LMOD_PAGER=cat` skips the `less` pager `module spider` opens by
+default):
 
 ```bash
-module spider Python
+LMOD_PAGER=cat module spider 'Python'
 ```
 
-By default that output opens in `less` — quit it with `q`. To skip the
-pager entirely, run `LMOD_PAGER=cat module spider Python` instead.
+<details>
+<summary>Expected output</summary>
+
+```
+-----------------------------------------------------------------------------------------------------------------------
+  Python:
+-----------------------------------------------------------------------------------------------------------------------
+    Description:
+      Python is a programming language that lets you work more quickly and integrate your systems more effectively.
+
+     Versions:
+        Python/2.7.18-bare
+        Python/2.7.18
+        Python/3.9.5-bare
+        Python/3.9.5
+        Python/3.9.6-bare
+        Python/3.9.6
+        Python/3.10.4-bare
+        Python/3.10.4
+        Python/3.10.8-bare
+        Python/3.10.8
+        Python/3.11.3
+        Python/3.11.5
+        Python/3.12.3
+        Python/3.13.1
+        Python/3.13.5
+     Other possible modules matches:
+        GitPython  IPython  Python-DVUploader  Python-bundle-PyPI  flatbuffers-python  meson-python  protobuf-python  ...
+
+-----------------------------------------------------------------------------------------------------------------------
+  To find other possible module matches execute:
+
+      $ module -r spider '.*Python.*'
+
+-----------------------------------------------------------------------------------------------------------------------
+  For detailed information about a specific "Python" package (including how to load the modules) use the module's full name.
+  Note that names that have a trailing (E) are extensions provided by other modules.
+  For example:
+
+     $ module spider Python/3.13.5
+-----------------------------------------------------------------------------------------------------------------------
+```
+</details>
 
 We'll use `3.13.5` for the rest of this exercise; any newer version you
 spot works just as well:
