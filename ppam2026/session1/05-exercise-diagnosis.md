@@ -203,16 +203,39 @@ Create and activate a virtualenv, then install the project:
 python -m venv venv
 ```
 
+Creates a `venv/` directory holding an isolated copy of the Python
+3.13.5 interpreter and its own `pip`, separate from anything else on the
+node. No output on success, and your prompt doesn't change yet.
+
 ```bash
 source venv/bin/activate
 ```
+
+Puts `venv/bin` at the front of `PATH` for this shell, so `python` and
+`pip` resolve to the venv's copies instead of the module-loaded system
+ones. Your prompt gains a `(venv)` prefix:
+
+<details>
+<summary>Expected output</summary>
+
+```
+(venv) [athena][tutorial256@t0003 iontracks-solver]$
+```
+</details>
 
 ```bash
 pip install -e ".[dev]"
 ```
 
-Your prompt should now show `(venv)`. That's what the rest of this
-exercise runs inside.
+Installs this repo into the venv in **editable** mode (`-e`) — code
+changes take effect immediately, no reinstall needed — along with the
+`dev` extra from `pyproject.toml` (`pytest`, `matplotlib`), on top of the
+core dependencies (`numpy`, `numba`, `pandas`, `scipy`, `mpmath`). Expect
+a couple minutes of `Collecting ...`/`Building wheel ...` lines, ending
+with `Successfully installed iontracks-solver-0.1.0 ...` and the rest of
+the dependency list.
+
+That `(venv)` prompt is what the rest of this exercise runs inside.
 
 ## Task
 
