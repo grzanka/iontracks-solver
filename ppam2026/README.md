@@ -77,15 +77,19 @@ The full tutorial writeup, including the detailed agenda below, is in
 - Re-run the timing harness and the correctness check after every change.
 
 **16:30–18:00 — Solution reveal, security debrief, and wrap-up**
+([materials](session3/))
 
 - Synthesis: compare each participant's findings against the optimized
-  reference.
+  reference. ([notes](session3/01-solution-reveal-and-synthesis.md))
 - Discussion: where the agent's hardware reasoning held up under
   measurement, where it didn't, and how participants told the difference.
+  ([notes](session3/02-hardware-reasoning-discussion.md))
 - Security retrospective: LLMs executing risky commands, why the rules held,
   and what to take away for using coding agents on shared HPC accounts.
+  ([notes](session3/03-security-retrospective.md))
 - Wrap-up: agent as an analysis-and-optimization tool, not autocomplete; the
   case for on-prem LLMs; pointers to the reference repo.
+  ([notes](session3/04-wrap-up.md))
 
 ## Conference day schedule — Sunday, August 30, 2026
 
