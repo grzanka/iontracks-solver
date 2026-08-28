@@ -156,6 +156,31 @@ Run pytest and confirm the answer didn't change, only the timing.
 Starting points, not a script — adapt them to what the agent's already
 told you.
 
+### Profiling
+
+Deeper follow-ups once the initial `cProfile` summary from step 1 has
+pointed at a suspect:
+
+```
+Profile bench.py with line_profiler on whichever function cProfile
+flagged as hottest — I want line-by-line time, not just the
+function-level view.
+```
+
+```
+numba JIT-compiles on first call. Run bench.py twice back-to-back and
+tell me how much of the first run's time was compilation overhead
+versus the second run's steady-state time.
+```
+
+```
+Re-profile with a larger pulse count (or more tracks) and check whether
+the same functions still dominate, or whether the ranking shifts with
+problem size.
+```
+
+### Scientific plots
+
 `bench.py` only prints the final numbers — the `Result` object it
 discards (`time_s`, `f_t`, `ks`, `positive_array`, `negative_array`, see
 [`ion_chamber/state.py`](../../ion_chamber/state.py)) has the rest. Have
@@ -163,18 +188,29 @@ the agent write a small standalone script that calls `run_simulation`
 directly to get at it — that's exploration, not the afternoon's "change
 the solver."
 
-- "Write a short script that calls `run_simulation` directly with the
-  default config and plots `f_t` (collection efficiency) against
-  `time_s`. I want to see the pulse and the clearance tail as visibly
-  distinct regions on the charge-evolution curve."
-- "From that same run, plot `k_s(t) = 1/f_t(t)` over time and tell me
-  roughly when it's converged versus still settling."
-- "Take the final `positive_array` and `negative_array` and plot a 2D
-  slice through the mid-height of the gap, so I can see the radial ion
-  density profile left behind."
-- "Run it twice with `sampled_radius_cm` (or `dose_rate_Gy_s`) at two
-  different values and plot both charge-evolution curves together — does
-  the shape change, or just the final `k_s`?"
+```
+Write a short script that calls run_simulation directly with the
+default config and plots f_t (collection efficiency) against time_s. I
+want to see the pulse and the clearance tail as visibly distinct
+regions on the charge-evolution curve.
+```
+
+```
+From that same run, plot k_s(t) = 1/f_t(t) over time and tell me
+roughly when it's converged versus still settling.
+```
+
+```
+Take the final positive_array and negative_array and plot a 2D slice
+through the mid-height of the gap, so I can see the radial ion density
+profile left behind.
+```
+
+```
+Run it twice with sampled_radius_cm (or dose_rate_Gy_s) at two
+different values and plot both charge-evolution curves together — does
+the shape change, or just the final k_s?
+```
 
 ## What "done" looks like
 
