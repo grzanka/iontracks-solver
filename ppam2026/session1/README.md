@@ -9,3 +9,4 @@ Materials for the first block, in the order they're meant to be used:
 3. [Ground rules for the day](03-agent-safety-rules.md)
 4. [Setup](04-setup.md)
 5. [Exercise: diagnose before you optimize](05-exercise-diagnosis.md)
+6. [Exercise: diagnose before you optimize, continued](06-exercise-agent-diagnosis.md)

@@ -1,9 +1,11 @@
 # Exercise: diagnose before you optimize
 
-*[↑ Session 1](README.md) · [← Prev: Setup](04-setup.md) · Next: —*
+*[↑ Session 1](README.md) · [← Prev: Setup](04-setup.md) · [Next: Exercise, continued →](06-exercise-agent-diagnosis.md)*
 
 The only goal this morning is a measurement-backed diagnosis. No code
-changes yet — that's the afternoon session.
+changes yet — that's the afternoon session. This file gets your baseline
+numbers on the record; the next file brings the agent in to profile,
+plot, and explain them.
 
 ## Materials
 
@@ -239,13 +241,10 @@ That `(venv)` prompt is what the rest of this exercise runs inside.
 
 ## Task
 
-Steps below happen in two different places: some are commands you type
-straight into your shell, others are prompts you type to the agent
-inside `opencode` (launch it with the `opencode` command, from inside
-`iontracks-solver` — it takes over the same terminal). Each step below
-is marked **Terminal** or **opencode** accordingly.
+Everything below runs directly in your shell — no agent yet, just
+getting the numbers you'll hand to it in the next file.
 
-1. **Terminal.** Confirm the baseline is still correct:
+1. Confirm the baseline is still correct:
 
    ```bash
    pytest
@@ -275,7 +274,7 @@ is marked **Terminal** or **opencode** accordingly.
    If anything fails here, stop and sort it out before going further —
    everything else in this exercise assumes this baseline is correct.
 
-2. **Terminal.** Time a single run:
+2. Time a single run:
 
    ```bash
    python bench.py
@@ -315,89 +314,20 @@ is marked **Terminal** or **opencode** accordingly.
    ```
    </details>
 
-   Note the wall time and `k_s` — you'll want them to compare against
-   the sweep in step 4.
+   Note the wall time and `k_s` — you'll compare them against the sweep
+   below, and again in the next file once the agent's involved.
 
-3. **opencode.** Ask the agent to profile that same run — don't assume
-   the parallelised loop is the hot path, check.
-
-4. **Terminal**, with one sub-step in **opencode**. Sweep thread counts:
+3. Sweep thread counts:
 
    ```bash
    python sweep.py --threads 1 2 4 8 --out sweep.csv
    ```
 
-   Adjust the thread list to this node's actual core count (`nproc`, or
-   whatever `--cpus-per-task` you got from `srun`) — have the agent check
-   it rather than guessing (ask it in `opencode`), then run the command
-   above yourself with the corrected list.
+   This runs the same simulation once per thread count in that list and
+   writes wall time for each to `sweep.csv`. `1 2 4 8` is a placeholder —
+   whether it's the right range for *this* node (and what the results
+   mean) is exactly what the agent helps you figure out next.
 
-5. **opencode.** Have the agent plot wall time and speedup vs. thread
-   count from `sweep.csv`.
-
-6. **opencode**, or in your own notes. Write three to five sentences:
-   where the time goes, whether adding threads helps, and why — grounded
-   in what the profiler and plot showed, not in Amdahl's law recited from
-   memory.
-
-## Example prompts
-
-Starting points, not a script — adapt them to what the agent's already
-told you.
-
-### Performance
-
-- "Run `bench.py` under `cProfile` and summarize the top 10 functions by
-  cumulative time. I want to know where the time goes, not just the
-  total."
-- "Before we talk about thread counts, check how many CPU cores and how
-  much cache this node actually has."
-- "Run `sweep.py` with `--threads` from 1 up to this node's core count,
-  write `sweep.csv`, and plot wall time and speedup vs. thread count."
-- "Given the profiler output and that plot, explain in a few sentences why
-  the speedup curve looks the way it does — cite the actual numbers, not
-  Amdahl's law in the abstract."
-- "Run `pytest` and confirm the answer didn't change, only the timing."
-
-### Data exploration
-
-`bench.py` only prints the final numbers — the `Result` object it
-discards (`time_s`, `f_t`, `ks`, `positive_array`, `negative_array`, see
-[`ion_chamber/state.py`](../../ion_chamber/state.py)) has the rest. Have
-the agent write a small standalone script that calls `run_simulation`
-directly to get at it — that's exploration, not the afternoon's "change
-the solver."
-
-- "Write a short script that calls `run_simulation` directly with the
-  default config and plots `f_t` (collection efficiency) against
-  `time_s`. I want to see the pulse and the clearance tail as visibly
-  distinct regions on the charge-evolution curve."
-- "From that same run, plot `k_s(t) = 1/f_t(t)` over time and tell me
-  roughly when it's converged versus still settling."
-- "Take the final `positive_array` and `negative_array` and plot a 2D
-  slice through the mid-height of the gap, so I can see the radial ion
-  density profile left behind."
-- "Run it twice with `sampled_radius_cm` (or `dose_rate_Gy_s`) at two
-  different values and plot both charge-evolution curves together — does
-  the shape change, or just the final `k_s`?"
-
-## What "done" looks like
-
-A plot, a profiler summary, and a short written diagnosis you could hand
-to someone else and have them understand what's slow and why, without
-reading the code themselves. That diagnosis is what gets compared against
-the reference solution in the 16:30 synthesis.
-
-## Wrapping up
-
-Leave things clean for the next exercise:
-
-```bash
-deactivate
-```
-
-```bash
-exit
-```
-
-The second `exit` leaves the `srun` shell and frees the node.
+You've now got a correctness check, a single-run baseline, and a
+`sweep.csv` on disk. Head to
+[the next file](06-exercise-agent-diagnosis.md) to bring the agent in.
