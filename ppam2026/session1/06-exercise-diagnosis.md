@@ -124,7 +124,42 @@ works, one step at a time, instead of taking the final answer on faith.
    ```
    </details>
 
-4. **opencode**, or in your own notes. Write three to five sentences:
+4. **opencode.** There's no GUI on this node, so get the plot onto your
+   own machine to actually look at it before writing anything down.
+
+   <details>
+   <summary>Example prompt</summary>
+
+   ```
+   I need to view the plot you just saved on my own laptop, not on this
+   node. What's the exact command I should run, and from where, to copy
+   it over?
+   ```
+   </details>
+
+   The agent should point you at something like this, run from a
+   terminal **on your laptop** — not inside opencode, and not by
+   opening a new shell on the node itself:
+
+   ```bash
+   scp tutorialXXX@athena.cyfronet.pl:/net/tscratch/people/tutorialXXX/iontracks-solver/<plot-filename>.png .
+   ```
+
+   That works straight from your laptop to the login node's hostname —
+   not the specific `t0033`-style worker node you `srun`'d into, which
+   isn't reachable from outside — because `$SCRATCH` is shared storage
+   both see. Swap in your own account number and whatever filename the
+   agent actually used.
+
+   One more gotcha, since you're about to copy a command out of a
+   terminal: don't reach for **Ctrl+C** to do it. Inside opencode (and
+   most terminal programs), Ctrl+C sends an interrupt signal — it can
+   kill the very session you're trying to copy from, not copy anything.
+   Select the text by dragging over it with your mouse instead, then
+   use your terminal's own copy shortcut (or right-click → Copy); paste
+   with Ctrl+V, Cmd+V, or a middle-click, depending on your setup.
+
+5. **opencode**, or in your own notes. Write three to five sentences:
    where the time goes, whether adding threads helps, and why — grounded
    in what the profiler and plot showed, not in Amdahl's law recited from
    memory.
