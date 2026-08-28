@@ -57,7 +57,9 @@ Read the actual command before answering, same as reviewing a diff:
   something else.
 
 For this exercise, pick **Allow once** every time — you'll see this
-prompt often, and reviewing each command as it comes up is the point.
+prompt often, and that's a feature, not friction: it's your chance to
+inspect every command before it runs and actually watch how the agent
+works, one step at a time, instead of taking the final answer on faith.
 
 ## Task
 
