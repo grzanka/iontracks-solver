@@ -65,12 +65,15 @@ The full tutorial writeup, including the detailed agenda below, is in
   ([exercise](session1/05-exercise-measurement.md))
 
 **14:20–16:00 — Optimization: algorithmic and hardware-aware**
+([materials](session2/))
 
 - Reframing the question: instead of "make it faster," have the agent check
   the hardware it's running on — cores, cache, NUMA layout.
+  ([notes](session2/01-reframing-the-question.md))
 - Hands-on: algorithmic optimization — restructuring the hot loop.
+  ([exercise](session2/02-exercise-algorithmic-optimization.md))
 - Hands-on: hardware-aware optimization — deciding how, and whether, to
-  parallelize.
+  parallelize. ([exercise](session2/03-exercise-hardware-aware-optimization.md))
 - Re-run the timing harness and the correctness check after every change.
 
 **16:30–18:00 — Solution reveal, security debrief, and wrap-up**
