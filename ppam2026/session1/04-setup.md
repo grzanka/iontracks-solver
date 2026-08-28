@@ -80,8 +80,28 @@ curl -fsSL https://opencode.ai/install | bash
 
 This downloads the `opencode` binary to `~/.opencode/bin/opencode` and
 adds that directory to your `PATH` by editing your shell's rc file
-(`.bashrc`, `.zshrc`, ...). Open a new shell — or log out and back in via
-SSH — before the `opencode` command is found.
+(`.bashrc`, `.zshrc`, ...). That edit only takes effect in shells started
+*after* it runs — your current SSH session already sourced `.bashrc`
+before the install, so it never picks up the change. Trying `opencode`
+right now fails:
+
+```
+opencode
+-bash: opencode: command not found
+```
+
+Log out (`exit` or `logout`) and SSH back into Athena to pick up the
+updated `PATH`. Once you're back in, confirm it's found:
+
+```bash
+opencode models
+```
+
+This lists the free models opencode ships preconfigured with out of the
+box — no login needed, e.g. `opencode/big-pickle`,
+`opencode/nemotron-3-ultra-free`. These run on opencode's own cloud, not
+on Cyfronet hardware — we won't use them; the next step adds the
+Cyfronet-hosted PLGrid models on top.
 
 opencode's own machine-wide config lives under your home directory, but
 this repo carries its own per-project config in `opencode.json` and
@@ -89,6 +109,19 @@ this repo carries its own per-project config in `opencode.json` and
 lets opencode talk to the Cyfronet-hosted LLM.
 
 ### 4. Authenticate against LLM Lab
+
+Log back in after step 3's relogin, and you land in your **home
+directory** (`~`), not the project checkout — SSH always drops you there
+fresh, it doesn't remember where you `cd`'d to last time. Go back into
+the repo first:
+
+```bash
+cd $SCRATCH/iontracks-solver
+```
+
+The `plgrid` provider isn't a thing opencode knows about globally — it's
+defined by this repo's `opencode.json` and `.opencode/plugins/`, so the
+login command only works from inside the project directory.
 
 Grab your LLM Lab access token — organizers hand these out for tutorial
 accounts; on your own PLGrid account, generate one yourself at
@@ -101,6 +134,19 @@ opencode providers login -p plgrid
 
 Paste the token when prompted. opencode confirms the login and stores it
 for future sessions — you won't be asked again on this account.
+
+If you run that command from anywhere outside the project (like your
+home directory right after logging back in), opencode has no idea what
+`plgrid` is:
+
+```
+opencode providers login -p plgrid
+
+┌  Add credential
+Error: Unknown provider "plgrid"
+```
+
+If you see that, `cd` into `$SCRATCH/iontracks-solver` and try again.
 
 ### 5. Verify it can see the models
 

@@ -26,11 +26,55 @@ doesn't work for you). This exercise only needs CPUs:
 srun -C memfs --time=2:00:00 -A tutorial -p tutorial --nodes=1 --ntasks-per-node=1 --cpus-per-task=16 --mem=120G --pty bash
 ```
 
-If you instead need a GPU (not required for this exercise), add `--gpus=1`:
+What each flag does:
+
+- `-C memfs` — not a hard requirement but an extra: ask for a node that
+  also has `memfs`, RAM mapped as a filesystem for extremely fast
+  volatile I/O (gone when the job ends).
+- `--time=2:00:00` — walltime limit; the job is killed after 2 hours.
+- `-A tutorial` — Slurm account to bill the job to (the shared tutorial
+  account for this school).
+- `-p tutorial` — partition (queue) reserved for the tutorial.
+- `--nodes=1` — allocate one compute node.
+- `--ntasks-per-node=1` — run a single task on that node (no MPI here).
+- `--cpus-per-task=16` — give that task 16 CPU cores, for the solver's
+  thread pool.
+- `--mem=120G` — reserve 120 GB of RAM.
+- `--pty bash` — run `bash` as an interactive shell on the allocated
+  node, instead of a batch script.
+
+`srun` blocks until a node is free. Expect something like this:
+
+```
+srun: job 3100383 queued and waiting for resources
+srun: job 3100383 has been allocated resources
+[athena][tutorial256@t0033 ~]$
+```
+
+The "queued and waiting" line may sit there for a while if the cluster is
+busy — that's normal, just wait. Once resources are granted, your prompt
+changes from `login01` (the access node) to a worker node name like
+`t0033`. That's your signal that you're now on a compute node with real
+CPUs, not the shared login node.
+
+You can check your job is actually running with:
 
 ```bash
-srun -C memfs --time=2:00:00 -A tutorial -p tutorial --gpus=1 --nodes=1 --ntasks-per-node=1 --cpus-per-task=16 --mem=120G --pty bash
+squeue --me
 ```
+
+```
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           3100383  tutorial     bash tutorial  R       4:31      1 t0033
+```
+
+`ST` is the job state (`R` = running, `PD` = pending), `TIME` is elapsed
+runtime against your `--time` limit, and `NODELIST` names the node(s)
+it's running on — should match the hostname in your prompt.
+
+This exercise doesn't need a GPU — stick with the one `srun` above. Don't
+run a second `srun` on top of it; that would queue a second job instead
+of replacing the first.
 
 Move into the repo you cloned during setup:
 
