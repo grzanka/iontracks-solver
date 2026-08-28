@@ -8,4 +8,5 @@ Materials for the first block, in the order they're meant to be used:
 2. [Why an on-prem LLM](02-why-onprem-llms.md)
 3. [Ground rules for the day](03-agent-safety-rules.md)
 4. [Setup](04-setup.md)
-5. [Exercise: diagnose before you optimize](05-exercise-diagnosis.md)
+5. [Exercise: measure before you optimize](05-exercise-measurement.md)
+6. [Exercise: diagnose before you optimize](06-exercise-diagnosis.md)

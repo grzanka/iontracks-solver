@@ -62,7 +62,7 @@ The full tutorial writeup, including the detailed agenda below, is in
 - Hands-on: treat the agent as a lab assistant, not an author — "run the
   sweep, plot wall time and speedup vs. thread count, explain the shape" —
   and write a short diagnosis based on the output.
-  ([exercise](session1/05-exercise-diagnosis.md))
+  ([exercise](session1/05-exercise-measurement.md))
 
 **14:20–16:00 — Optimization: algorithmic and hardware-aware**
 
