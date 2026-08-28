@@ -239,7 +239,13 @@ That `(venv)` prompt is what the rest of this exercise runs inside.
 
 ## Task
 
-1. Confirm the baseline is still correct:
+Steps below happen in two different places: some are commands you type
+straight into your shell, others are prompts you type to the agent
+inside `opencode` (launch it with the `opencode` command, from inside
+`iontracks-solver` — it takes over the same terminal). Each step below
+is marked **Terminal** or **opencode** accordingly.
+
+1. **Terminal.** Confirm the baseline is still correct:
 
    ```bash
    pytest
@@ -269,7 +275,7 @@ That `(venv)` prompt is what the rest of this exercise runs inside.
    If anything fails here, stop and sort it out before going further —
    everything else in this exercise assumes this baseline is correct.
 
-2. Time a single run:
+2. **Terminal.** Time a single run:
 
    ```bash
    python bench.py
@@ -312,10 +318,10 @@ That `(venv)` prompt is what the rest of this exercise runs inside.
    Note the wall time and `k_s` — you'll want them to compare against
    the sweep in step 4.
 
-3. Ask the agent to profile that same run — don't assume the parallelised
-   loop is the hot path, check.
+3. **opencode.** Ask the agent to profile that same run — don't assume
+   the parallelised loop is the hot path, check.
 
-4. Sweep thread counts:
+4. **Terminal**, with one sub-step in **opencode**. Sweep thread counts:
 
    ```bash
    python sweep.py --threads 1 2 4 8 --out sweep.csv
@@ -323,14 +329,16 @@ That `(venv)` prompt is what the rest of this exercise runs inside.
 
    Adjust the thread list to this node's actual core count (`nproc`, or
    whatever `--cpus-per-task` you got from `srun`) — have the agent check
-   it rather than guessing.
+   it rather than guessing (ask it in `opencode`), then run the command
+   above yourself with the corrected list.
 
-5. Have the agent plot wall time and speedup vs. thread count from
-   `sweep.csv`.
+5. **opencode.** Have the agent plot wall time and speedup vs. thread
+   count from `sweep.csv`.
 
-6. Write three to five sentences: where the time goes, whether adding
-   threads helps, and why — grounded in what the profiler and plot showed,
-   not in Amdahl's law recited from memory.
+6. **opencode**, or in your own notes. Write three to five sentences:
+   where the time goes, whether adding threads helps, and why — grounded
+   in what the profiler and plot showed, not in Amdahl's law recited from
+   memory.
 
 ## Example prompts
 
