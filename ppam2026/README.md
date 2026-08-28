@@ -65,24 +65,31 @@ The full tutorial writeup, including the detailed agenda below, is in
   ([exercise](session1/05-exercise-measurement.md))
 
 **14:20–16:00 — Optimization: algorithmic and hardware-aware**
+([materials](session2/))
 
 - Reframing the question: instead of "make it faster," have the agent check
   the hardware it's running on — cores, cache, NUMA layout.
+  ([notes](session2/01-reframing-the-question.md))
 - Hands-on: algorithmic optimization — restructuring the hot loop.
+  ([exercise](session2/02-exercise-algorithmic-optimization.md))
 - Hands-on: hardware-aware optimization — deciding how, and whether, to
-  parallelize.
+  parallelize. ([exercise](session2/03-exercise-hardware-aware-optimization.md))
 - Re-run the timing harness and the correctness check after every change.
 
 **16:30–18:00 — Solution reveal, security debrief, and wrap-up**
+([materials](session3/))
 
 - Synthesis: compare each participant's findings against the optimized
-  reference.
+  reference. ([notes](session3/01-solution-reveal-and-synthesis.md))
 - Discussion: where the agent's hardware reasoning held up under
   measurement, where it didn't, and how participants told the difference.
+  ([notes](session3/02-hardware-reasoning-discussion.md))
 - Security retrospective: LLMs executing risky commands, why the rules held,
   and what to take away for using coding agents on shared HPC accounts.
+  ([notes](session3/03-security-retrospective.md))
 - Wrap-up: agent as an analysis-and-optimization tool, not autocomplete; the
   case for on-prem LLMs; pointers to the reference repo.
+  ([notes](session3/04-wrap-up.md))
 
 ## Conference day schedule — Sunday, August 30, 2026
 

@@ -4,23 +4,15 @@ Two things happen per time step:
 
 1. **Track deposition.** Each proton track arriving this step writes a 2D
    Gaussian charge cross-section into the grid, repeated along every layer
-   of the gap (a track is a straight line through it). This kernel loops
-   over the *entire* xy plane for every single track, and calls ``exp()``
-   at every grid point -- there is no restriction to a local neighbourhood
-   around the track, and no attempt to factor the 2D Gaussian into cheaper
-   pieces. It runs single-threaded.
+   of the gap (a track is a straight line through it). This runs
+   single-threaded, once per track.
 
 2. **The PDE sweep.** A Lax-Wendroff step advances both carrier densities
    (drift + diffusion + recombination) by one time step. This loop is
-   parallelised with Numba's ``prange`` over the outer (x) axis -- the
-   obvious thing to try when a loop is slow, applied to the loop that looks
-   like the hot one.
+   parallelised with Numba's ``prange`` over the outer (x) axis.
 
 Both kernels compute the same physics as a careful implementation would;
-nothing here is numerically wrong. What is worth finding: whether "the
-obvious thing to try" (parallelise the loop that looks hot) is actually
-where the time goes, and whether the un-parallelised deposition scales the
-way you'd want it to as thread count goes up.
+nothing here is numerically wrong.
 """
 
 from math import ceil, exp, floor
