@@ -56,6 +56,9 @@ Read the actual command before answering, same as reviewing a diff:
 - **Reject** — cancels it; tell the agent why in the chat and it'll try
   something else.
 
+For this exercise, pick **Allow once** every time — you'll see this
+prompt often, and reviewing each command as it comes up is the point.
+
 ## Task
 
 1. **opencode.** Profile the `bench.py` run — don't assume the
