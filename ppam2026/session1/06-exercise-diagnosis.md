@@ -18,8 +18,7 @@ opencode
 
 This takes over the terminal with an interactive chat. Every step below
 is a prompt you type there — the agent runs the actual commands (with
-your approval, see below), so you shouldn't need to leave this chat
-until [wrapping up](#wrapping-up).
+your approval, see below), so you shouldn't need to leave this chat.
 
 ## Expect permission prompts
 
@@ -211,26 +210,3 @@ Run it twice with sampled_radius_cm (or dose_rate_Gy_s) at two
 different values and plot both charge-evolution curves together — does
 the shape change, or just the final k_s?
 ```
-
-## What "done" looks like
-
-A plot, a profiler summary, and a short written diagnosis you could hand
-to someone else and have them understand what's slow and why, without
-reading the code themselves. That diagnosis is what gets compared against
-the reference solution in the 16:30 synthesis.
-
-## Wrapping up
-
-Leave things clean for the next exercise. First leave opencode's chat
-(type `exit`, or press Ctrl+D, at its prompt) to drop back into the
-regular shell, then:
-
-```bash
-deactivate
-```
-
-```bash
-exit
-```
-
-That second `exit` leaves the `srun` shell and frees the node.
