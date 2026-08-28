@@ -1,8 +1,8 @@
-# Exercise: diagnose before you optimize, continued
+# Exercise: diagnose before you optimize
 
-*[↑ Session 1](README.md) · [← Prev: Exercise, part 1](05-exercise-diagnosis.md) · Next: —*
+*[↑ Session 1](README.md) · [← Prev: Measure](05-exercise-measurement.md) · Next: —*
 
-Picking up where [the previous file](05-exercise-diagnosis.md) left off:
+Picking up where [the previous file](05-exercise-measurement.md) left off:
 you should have a passing `pytest`, a `bench.py` baseline (wall time and
 `k_s` noted), and a `sweep.csv` on disk, all inside the `(venv)` shell on
 your `srun` node. This file brings the agent in to profile, plot, and

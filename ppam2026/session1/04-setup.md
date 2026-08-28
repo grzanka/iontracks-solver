@@ -1,6 +1,6 @@
 # Setup
 
-*[↑ Session 1](README.md) · [← Prev: Ground rules](03-agent-safety-rules.md) · [Next: Exercise →](05-exercise-diagnosis.md)*
+*[↑ Session 1](README.md) · [← Prev: Ground rules](03-agent-safety-rules.md) · [Next: Exercise →](05-exercise-measurement.md)*
 
 ## Resources
 
@@ -165,4 +165,4 @@ Expect a list of PLGrid-hosted models. We'll use **GLM 5.2**
 (`zai-org/GLM-5.2-FP8`, 1M-token context, ~750 GB VRAM, comparable to
 Claude Sonnet in benchmarks) as the default.
 
-You're set — head to the [exercise](05-exercise-diagnosis.md).
+You're set — head to the [exercise](05-exercise-measurement.md).

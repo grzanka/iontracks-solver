@@ -1,6 +1,6 @@
-# Exercise: diagnose before you optimize
+# Exercise: measure before you optimize
 
-*[↑ Session 1](README.md) · [← Prev: Setup](04-setup.md) · [Next: Exercise, continued →](06-exercise-agent-diagnosis.md)*
+*[↑ Session 1](README.md) · [← Prev: Setup](04-setup.md) · [Next: Diagnose with the agent →](06-exercise-diagnosis.md)*
 
 The only goal this morning is a measurement-backed diagnosis. No code
 changes yet — that's the afternoon session. This file gets your baseline
@@ -324,10 +324,30 @@ getting the numbers you'll hand to it in the next file.
    ```
 
    This runs the same simulation once per thread count in that list and
-   writes wall time for each to `sweep.csv`. `1 2 4 8` is a placeholder —
-   whether it's the right range for *this* node (and what the results
-   mean) is exactly what the agent helps you figure out next.
+   writes wall time for each to `sweep.csv`:
+
+   <details>
+   <summary>Expected output</summary>
+
+   ```
+   threads=  1  repeat=0  wall=8.42s  ks=1.4554
+   threads=  2  repeat=0  wall=8.54s  ks=1.4554
+   threads=  4  repeat=0  wall=8.65s  ks=1.4554
+   threads=  8  repeat=0  wall=8.75s  ks=1.4554
+
+   wrote sweep.csv
+   ```
+   </details>
+
+   `k_s` staying identical across rows is expected — threading changes
+   how fast you get the answer, not the answer itself, and `pytest`
+   already confirmed that answer is correct. Whether wall time going the
+   *wrong* direction as threads increase is normal or a problem is
+   exactly what the agent helps you figure out next — resist the urge to
+   explain it yourself before you've profiled anything. `1 2 4 8` is also
+   just a placeholder; whether it's the right range for *this* node is
+   part of that same question.
 
 You've now got a correctness check, a single-run baseline, and a
 `sweep.csv` on disk. Head to
-[the next file](06-exercise-agent-diagnosis.md) to bring the agent in.
+[the next file](06-exercise-diagnosis.md) to bring the agent in.
