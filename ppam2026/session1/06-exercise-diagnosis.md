@@ -89,8 +89,30 @@ works, one step at a time, instead of taking the final answer on faith.
    ```
    </details>
 
-   If that turns up more cores than `1 2 4 8` covers, re-run the sweep
-   yourself with the corrected list (swap in the agent's numbers):
+   Watch out here: on a shared node, `lscpu` alone answers the wrong
+   question. It reports the physical host — on Athena's CPU nodes, all
+   128 cores across 2 sockets — not what Slurm actually handed *your*
+   job. The `--cpus-per-task=16` from your `srun` command is enforced
+   through a cgroup, and those 16 cores aren't necessarily one tidy
+   contiguous block; they can be scattered across several NUMA nodes.
+   Push the agent to check the allocation, not just the node:
+
+   <details>
+   <summary>Example prompt</summary>
+
+   ```
+   That's the whole physical node, not necessarily what Slurm gave this
+   job. Check nproc, this process's actual CPU affinity (taskset -cp
+   $$), and numactl --hardware, and tell me which NUMA node(s) our
+   allocated cores actually sit on.
+   ```
+   </details>
+
+   If the agent's answer is "spread across N NUMA nodes," that alone is
+   worth a sentence in your diagnosis later — it explains why speedup
+   might stall well before your core count runs out. If it turns up more
+   *usable* cores than `1 2 4 8` covers, re-run the sweep yourself with
+   the corrected list (swap in the agent's numbers):
 
    ```bash
    python sweep.py --threads 1 2 4 8 16 --out sweep.csv
