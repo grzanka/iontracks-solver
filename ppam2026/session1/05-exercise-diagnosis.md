@@ -245,13 +245,72 @@ That `(venv)` prompt is what the rest of this exercise runs inside.
    pytest
    ```
 
+   This runs `tests/test_correctness.py` (checks the solver against
+   Jaffe theory) and `tests/test_smoke.py` (checks it runs at all
+   end-to-end without crashing) — 3 tests total, all should pass:
+
+   <details>
+   <summary>Expected output</summary>
+
+   ```
+   =================================================== test session starts ===================================================
+   platform linux -- Python 3.13.5, pytest-9.1.1, pluggy-1.6.0
+   rootdir: /net/tscratch/people/tutorial256/iontracks-solver
+   configfile: pyproject.toml
+   collected 3 items
+
+   tests/test_correctness.py .                                                                                         [ 33%]
+   tests/test_smoke.py ..                                                                                              [100%]
+
+   ==================================================== 3 passed in 3.84s ====================================================
+   ```
+   </details>
+
+   If anything fails here, stop and sort it out before going further —
+   everything else in this exercise assumes this baseline is correct.
+
 2. Time a single run:
 
    ```bash
    python bench.py
    ```
 
-   Note the wall time and `k_s`.
+   `bench.py` runs one simulation of a pulsed-beam ion chamber and
+   prints its setup, then progress, then the result. The setup lines
+   describe the physics scenario (particle, chamber geometry, the small
+   sub-volume being sampled, the simulation grid, and the pulse timing);
+   the `step N/1622  f = ...` lines are progress, showing the collection
+   efficiency `f` falling as recombination sets in during the pulse and
+   settling as ions clear afterwards; the last two lines are what you
+   actually need for this exercise — wall time and `k_s`:
+
+   <details>
+   <summary>Expected output</summary>
+
+   ```
+   Particle              : proton @ 60.0 MeV/u (LET = 0.00114 keV/um, track radius b = 20 um)
+   Chamber               : gap = 0.2 cm, V = 300.0 V (E = 1500 V/cm)
+   Sampled sub-volume    : radius = 60 um, area = 0.000113 cm^2
+   Grid                  : 20 x 20 x 206 voxels (10 um/voxel), 2.5 MiB peak
+   Time step dt          : 382.6 ns (Courant 0.947)
+   Pulse                 : 540.0 us (1412 steps), 91047 tracks, 50.0 Hz, 1 pulse(s)
+   Total simulated time  : 621 us (1622 steps)
+
+     step 1/1622  f = 0.9999
+     step 82/1622  f = 0.8761
+     step 163/1622  f = 0.7809
+     ...
+     step 1621/1622  f = 0.6871
+     (8.41 s, 1 thread(s))
+
+   Wall time (1 thread(s)): 8.41 s
+   Collection efficiency f      = 0.6871
+   Recombination factor  k_s = 1/f = 1.4554
+   ```
+   </details>
+
+   Note the wall time and `k_s` — you'll want them to compare against
+   the sweep in step 4.
 
 3. Ask the agent to profile that same run — don't assume the parallelised
    loop is the hot path, check.
