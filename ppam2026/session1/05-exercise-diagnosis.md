@@ -82,6 +82,51 @@ Move into the repo you cloned during setup:
 cd $SCRATCH/iontracks-solver
 ```
 
+The system Python is old (and so is the default `gcc`) — too old for this
+project:
+
+```bash
+python --version
+```
+
+```
+Python 3.9.25
+```
+
+```bash
+gcc --version
+```
+
+Run it and check for yourself — it'll be a much older release than the
+`GCC/14.3.0` loaded below.
+
+Load a current one through the module system instead:
+
+```bash
+module load GCC Python/3.13.5
+```
+
+```bash
+python --version
+```
+
+```
+Python 3.13.5
+```
+
+```bash
+gcc --version
+```
+
+Now reports `14.3.0`, matching the `GCC/14.3.0 loaded` line from the
+module load above.
+
+This module load is **not permanent** — it only applies to this shell.
+Logging out, or starting a fresh `srun` session next time, puts you back
+on Python 3.9.25 and the old `gcc`, so `module load GCC Python/3.13.5` is
+something you run again every time you get a new session, before
+creating the venv below.
+
 Create and activate a virtualenv, then install the project:
 
 ```bash
