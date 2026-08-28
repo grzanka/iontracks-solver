@@ -21,6 +21,41 @@ below are things you type there, not in the shell. Anywhere a step below
 says **Terminal**, exit back out of opencode first (or use a second
 terminal into the same node).
 
+## Expect permission prompts
+
+This is ground rule 1 from [the ground rules](03-agent-safety-rules.md)
+in practice: opencode asks before running any shell command, it doesn't
+just run it. Every task below will trigger at least one prompt like
+this:
+
+```
+Thought: 3.0s
+
+$ /net/tscratch/people/tutorial256/iontracks-solver/venv/bin/python -m
+cProfile -s cumulative /net/tscratch/people/tutorial256/iontracks-
+solver/bench.py --quiet 2>&1 | head -40
+
+△ Permission required
+  # Shell command
+
+$ /net/tscratch/people/tutorial256/iontracks-solver/venv/bin/python -m
+cProfile -s cumulative /net/tscratch/people/tutorial256/iontracks-
+solver/bench.py --quiet 2>&1 | head -40
+
+  Allow once   Allow always   Reject   ctrl+f fullscreen   ↕ select   enter confirm
+```
+
+Read the actual command before answering, same as reviewing a diff:
+
+- **Allow once** — runs just this one call; you'll be asked again next
+  time.
+- **Allow always** — stops asking for this exact command for the rest
+  of the session. Fine for something you expect to re-run a lot (like
+  this profiling command), but don't reach for it out of habit — it's
+  ground rule 4 ("never approve blindly") you'd be skipping.
+- **Reject** — cancels it; tell the agent why in the chat and it'll try
+  something else.
+
 ## Task
 
 1. **opencode.** Profile the `bench.py` run — don't assume the
