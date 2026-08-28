@@ -50,29 +50,52 @@ result. If yours pointed somewhere else, swap that in below instead.
    ```
    </details>
 
-2. **opencode.** `insert_track` has two named inefficiencies in
-   `solver.py`'s own module docstring — point the agent at both.
+2. **opencode.** Before handing over the fix, make the agent find the
+   problem itself. Don't paste in what's wasteful — describe the
+   physics and let it read the code.
 
    <details>
    <summary>Example prompt</summary>
 
    ```
-   insert_track loops over the entire xy plane and calls exp() at every
-   point, for every track, even though the Gaussian falls off fast
-   around each track's (x, y). Rewrite it to only touch a bounded
-   window around each track, sized to a few track radii (b2), and skip
-   the rest of the grid entirely.
+   insert_track is the hot function we found this morning. Read it
+   carefully and tell me what's algorithmically wasteful about it --
+   don't change anything yet, just diagnose. Think about what the
+   Gaussian charge distribution actually looks like in space, and where
+   in that loop time is being spent on grid points that barely
+   contribute to the result.
    ```
    </details>
 
+   `solver.py`'s own module docstring names two specific
+   inefficiencies: the loop scans the *entire* xy plane for every
+   track instead of a bounded window around it, and the 2D Gaussian is
+   never factored into cheaper separable 1D pieces. If the agent's
+   diagnosis lands on both on its own, good — that's the point of
+   asking first instead of telling. If it only catches one, or neither,
+   nudge it rather than just handing over the answer:
+
+   <details>
+   <summary>Example prompt (if it needs a nudge)</summary>
+
+   ```
+   You're right that the window doesn't need to cover the whole grid --
+   but look again at how the exponent is computed: r_sq =
+   (i-x)^2 + (j-y)^2, then a single exp(-r_sq*h2/b2). Is there a way to
+   avoid calling exp() once per grid point inside that window?
+   ```
+   </details>
+
+   Once the diagnosis actually covers both points, have it implement
+   what it just described:
+
    <details>
    <summary>Example prompt</summary>
 
    ```
-   Separately: the 2D Gaussian in insert_track is separable --
-   exp(-((i-x)^2+(j-y)^2)*h2/b2) factors into exp(-(i-x)^2*h2/b2) times
-   exp(-(j-y)^2*h2/b2). Precompute the 1D exponential factors along each
-   axis once per track instead of calling exp() inside the nested loop.
+   Go ahead and implement the fix(es) you just described. Keep the
+   physics identical -- this is about doing the same computation
+   faster, not approximating it.
    ```
    </details>
 
