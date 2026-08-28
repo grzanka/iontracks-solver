@@ -28,12 +28,13 @@ wrong answer.
 
 ## The reference
 
-The instructors hold an optimized reference implementation of
-`ion_chamber/solver.py` — the same bounded-window, separated-Gaussian fix
-this afternoon's exercise was steering everyone toward, plus the
-hardware-aware threading call for Athena's tutorial partition
-specifically. It isn't in this repo: revealing it before now would have
-turned session 2 into transcription instead of diagnosis.
+The optimized reference implementation lives in a separate repo,
+[grzanka/IonTracks-PulsedProton-Python](https://github.com/grzanka/IonTracks-PulsedProton-Python)
+— the same bounded-window, separated-Gaussian fix this afternoon's
+exercise was steering everyone toward, plus a hardware-aware threading
+call. It's deliberately not linked from anywhere participants could stumble
+onto it earlier in the day: pointing to it before now would have turned
+session 2 into transcription instead of diagnosis.
 
 Walk through it against what the room found:
 

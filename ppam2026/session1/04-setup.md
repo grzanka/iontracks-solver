@@ -165,4 +165,20 @@ Expect a list of PLGrid-hosted models. We'll use **GLM 5.2**
 (`zai-org/GLM-5.2-FP8`, 1M-token context, ~750 GB VRAM, comparable to
 Claude Sonnet in benchmarks) as the default.
 
+### 6. Say hello to the agent
+
+Listing models only confirms opencode knows they exist — it doesn't
+confirm a prompt actually makes it to GLM 5.2 and back. Launch opencode:
+
+```bash
+opencode
+```
+
+Once it's up, send it a one-line prompt, e.g. `What model are you, and
+what files are in this repo?` It should name GLM 5.2 (or the PLGrid model
+you're on) and correctly list this checkout's contents
+(`ion_chamber/`, `bench.py`, ...) — proof the round trip to Cyfronet's
+hardware and back actually works, not just that credentials were
+accepted. `Ctrl+C` (or `/exit`) to leave once you've seen a reply.
+
 You're set — head to the [exercise](05-exercise-measurement.md).
