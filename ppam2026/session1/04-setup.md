@@ -4,14 +4,15 @@
 
 ## Resources
 
-- Athena supercomputer, hosted at ACK Cyfronet: XXX CPU nodes (?? cores,
-  ?? RAM each), YYY GPU nodes (ZZZ GPUs, model ??, ?? VRAM).
+- Athena supercomputer, hosted at ACK Cyfronet: 48 GPU nodes, each with 128
+  CPU cores (2× AMD EPYC 7742) and 1 TB RAM, plus 8× NVIDIA A100-SXM4-40GB
+  GPUs (384 GPUs total).
 - Access via SSH (terminal on Linux/macOS, PowerShell or a terminal app on
   Windows) — the access node is reachable from the internet, worker nodes
   are reached from there via SLURM interactive jobs.
-- LLM Lab inference service (LLM models hosted on Cyfronet hardware),
-  reachable both from Athena and from your own laptop, free for
-  scientists.
+- [LLM Lab](https://llmlab.plgrid.pl/) inference service (LLM models hosted
+  on Cyfronet hardware), reachable both from Athena and from your own
+  laptop, free for scientists.
 
 ## Accounts
 
@@ -107,7 +108,8 @@ for future sessions — you won't be asked again on this account.
 opencode models plgrid
 ```
 
-Expect a list of PLGrid-hosted models. We'll use **GLM 5.2** (xx context,
-yyy VRAM, comparable to Claude Sonnet in benchmarks) as the default.
+Expect a list of PLGrid-hosted models. We'll use **GLM 5.2**
+(`zai-org/GLM-5.2-FP8`, 1M-token context, ~750 GB VRAM, comparable to
+Claude Sonnet in benchmarks) as the default.
 
 You're set — head to the [exercise](05-exercise-diagnosis.md).
