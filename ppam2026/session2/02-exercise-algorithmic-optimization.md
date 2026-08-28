@@ -60,10 +60,7 @@ result. If yours pointed somewhere else, swap that in below instead.
    ```
    insert_track is the hot function we found this morning. Read it
    carefully and tell me what's algorithmically wasteful about it --
-   don't change anything yet, just diagnose. Think about what the
-   Gaussian charge distribution actually looks like in space, and where
-   in that loop time is being spent on grid points that barely
-   contribute to the result.
+   don't change anything yet, just diagnose.
    ```
    </details>
 
