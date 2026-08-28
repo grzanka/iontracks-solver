@@ -19,11 +19,17 @@ You should already be on the Athena access node with `iontracks-solver`
 cloned into `$SCRATCH` from [setup](04-setup.md). If not, do that first.
 
 The access node isn't for running anything — grab an interactive node with
-real CPUs (ask an organizer for the actual `-A` grant if the one below
-doesn't work):
+real CPUs (ask an organizer if the tutorial account/partition below
+doesn't work for you). This exercise only needs CPUs:
 
 ```bash
-srun -C memfs --pty --time=2:00:00 -A <your-grant> -p plgrid-gpu-a100 --gres=gpu:a100:1 --cpus-per-task=32 --mem=80G bash
+srun -C memfs --time=2:00:00 -A tutorial -p tutorial --nodes=1 --ntasks-per-node=1 --cpus-per-task=16 --mem=120G --pty bash
+```
+
+If you instead need a GPU (not required for this exercise), add `--gpus=1`:
+
+```bash
+srun -C memfs --time=2:00:00 -A tutorial -p tutorial --gpus=1 --nodes=1 --ntasks-per-node=1 --cpus-per-task=16 --mem=120G --pty bash
 ```
 
 Move into the repo you cloned during setup:
