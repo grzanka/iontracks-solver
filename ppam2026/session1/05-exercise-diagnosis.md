@@ -112,7 +112,18 @@ gcc --version
 Run it and check for yourself — it'll be a much older release than the
 `GCC/14.3.0` loaded below.
 
-Load a current one through the module system instead:
+Load a current one through the module system instead. See what versions
+are actually available rather than taking the one below on faith:
+
+```bash
+module spider Python
+```
+
+By default that output opens in `less` — quit it with `q`. To skip the
+pager entirely, run `LMOD_PAGER=cat module spider Python` instead.
+
+We'll use `3.13.5` for the rest of this exercise; any newer version you
+spot works just as well:
 
 ```bash
 module load GCC Python/3.13.5
