@@ -43,13 +43,17 @@ What each flag does:
 - `--pty bash` — run `bash` as an interactive shell on the allocated
   node, instead of a batch script.
 
-`srun` blocks until a node is free. Expect something like this:
+`srun` blocks until a node is free.
+
+<details>
+<summary>Expected output</summary>
 
 ```
 srun: job 3100383 queued and waiting for resources
 srun: job 3100383 has been allocated resources
 [athena][tutorial256@t0033 ~]$
 ```
+</details>
 
 The "queued and waiting" line may sit there for a while if the cluster is
 busy — that's normal, just wait. Once resources are granted, your prompt
@@ -63,10 +67,14 @@ You can check your job is actually running with:
 squeue --me
 ```
 
+<details>
+<summary>Expected output</summary>
+
 ```
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            3100383  tutorial     bash tutorial  R       4:31      1 t0033
 ```
+</details>
 
 `ST` is the job state (`R` = running, `PD` = pending), `TIME` is elapsed
 runtime against your `--time` limit, and `NODELIST` names the node(s)
@@ -89,9 +97,13 @@ project:
 python --version
 ```
 
+<details>
+<summary>Expected output</summary>
+
 ```
 Python 3.9.25
 ```
+</details>
 
 ```bash
 gcc --version
@@ -110,9 +122,13 @@ module load GCC Python/3.13.5
 python --version
 ```
 
+<details>
+<summary>Expected output</summary>
+
 ```
 Python 3.13.5
 ```
+</details>
 
 ```bash
 gcc --version

@@ -82,13 +82,16 @@ This downloads the `opencode` binary to `~/.opencode/bin/opencode` and
 adds that directory to your `PATH` by editing your shell's rc file
 (`.bashrc`, `.zshrc`, ...). That edit only takes effect in shells started
 *after* it runs — your current SSH session already sourced `.bashrc`
-before the install, so it never picks up the change. Trying `opencode`
-right now fails:
+before the install, so it never picks up the change.
+
+<details>
+<summary>What happens if you try <code>opencode</code> right now</summary>
 
 ```
 opencode
 -bash: opencode: command not found
 ```
+</details>
 
 Log out (`exit` or `logout`) and SSH back into Athena to pick up the
 updated `PATH`. Once you're back in, confirm it's found:
@@ -139,12 +142,16 @@ If you run that command from anywhere outside the project (like your
 home directory right after logging back in), opencode has no idea what
 `plgrid` is:
 
+<details>
+<summary>What goes wrong outside the project directory</summary>
+
 ```
 opencode providers login -p plgrid
 
 ┌  Add credential
 Error: Unknown provider "plgrid"
 ```
+</details>
 
 If you see that, `cd` into `$SCRATCH/iontracks-solver` and try again.
 
