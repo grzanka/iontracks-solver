@@ -64,13 +64,14 @@ result. If yours pointed somewhere else, swap that in below instead.
    ```
    </details>
 
-   `solver.py`'s own module docstring names two specific
-   inefficiencies: the loop scans the *entire* xy plane for every
-   track instead of a bounded window around it, and the 2D Gaussian is
-   never factored into cheaper separable 1D pieces. If the agent's
-   diagnosis lands on both on its own, good — that's the point of
-   asking first instead of telling. If it only catches one, or neither,
-   nudge it rather than just handing over the answer:
+   There are two things worth checking the answer against: does it
+   notice the loop scans the *entire* xy plane for every track instead
+   of a bounded window around it, and does it notice the 2D Gaussian
+   could be factored into cheaper separable 1D pieces instead of one
+   `exp()` call per grid point. If the agent's diagnosis lands on both
+   on its own, good — that's the point of asking first instead of
+   telling. If it only catches one, or neither, nudge it rather than
+   just handing over the answer:
 
    <details>
    <summary>Example prompt (if it needs a nudge)</summary>
