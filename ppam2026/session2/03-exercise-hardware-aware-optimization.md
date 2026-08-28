@@ -115,13 +115,3 @@ should this parallelize?"
    Jaffe-theory correctness check.
    ```
    </details>
-
-## What "done" looks like
-
-A short written record — same bar as this morning's diagnosis — of:
-what the algorithmic fix changed and by how much (isolated from
-threading), what thread count this specific allocation's hardware
-actually justifies at each grid size tried, and how close the optimized
-code now gets to session 1's "full detector scale" target, in
-measurements or in a reasoned estimate. That's what gets compared
-against the reference solution in the wrap-up.
