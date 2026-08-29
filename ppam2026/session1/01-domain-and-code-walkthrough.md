@@ -79,3 +79,9 @@ resolve the first two; nothing past the clearance tail changes `k_s`.
    closed form, independent of the grid.
 4. [`tests/test_correctness.py`](../../tests/test_correctness.py) — how
    "still correct" gets checked after every change made today.
+
+Later, once opencode is open, this same reading order also works as a
+set of prompts for `researcher` — a read-only subagent
+([introduced in session1/06](06-exercise-diagnosis.md)) that explains
+code with `file:line` citations instead of reading it yourself end to
+end right now.

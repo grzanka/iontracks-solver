@@ -111,6 +111,13 @@ result. If yours pointed somewhere else, swap that in below instead.
    ```
    </details>
 
+   Optional: alongside your own read, run `/review` — this repo's
+   `reviewer` subagent (deliberately the slowest, most
+   correctness-focused model in `opencode.json`) reads the same diff and
+   reports defects with `file:line` references. It's read-only (can't
+   edit or run anything) and a second opinion, not a replacement for your
+   own — you still decide what to commit.
+
 4. **opencode.** Commit it (ground rule 3).
 
    <details>
