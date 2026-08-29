@@ -18,10 +18,9 @@
 
 - Tutorial accounts, valid for a few days, are provided to participants —
   they include access to Athena (including GPU nodes) and to LLM Lab.
-  Credentials aren't handed out at registration — they're distributed
-  via Slack instead, as an account number and password per participant,
-  posted once this first session starts; the invite link to join the
-  workspace is shared then too.
+  Credentials — an account number and password per participant — are
+  distributed via Slack, posted once this first session starts; the
+  invite link to join the workspace is shared then too.
 - If you already have a PLGrid account with Athena and LLM Lab activated,
   these same materials work with that account instead.
 - You can also run everything on your own laptop, limited by whatever
@@ -44,8 +43,8 @@ ssh tutorialXXX@athena.cyfronet.pl
 ```
 
 Replace `XXX` with the account number from the credentials posted in
-Slack (see [Accounts](#accounts) above) — not something handed out at
-registration. This drops you on the Athena **access node** — expect a
+Slack (see [Accounts](#accounts) above). This drops you on the Athena
+**access node** — expect a
 banner and a shell prompt; don't run anything heavier than `git` or
 `curl` here, actual computation happens later on a worker node via
 `srun`.
