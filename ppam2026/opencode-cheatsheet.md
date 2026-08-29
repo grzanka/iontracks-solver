@@ -31,6 +31,67 @@ config knob isn't obvious.*
 question where the full TUI is overkill — same permission system applies,
 it just prints instead of drawing a UI.
 
+## Agents and subagents
+
+opencode agents come in two modes, and that mode decides *how you reach
+them* — not what they're for.
+
+- **`primary`** — can be your *current* agent, driving the whole
+  conversation. Only one is active at a time; you switch between them.
+- **`subagent`** — never drives on its own. It's invoked for a single
+  task, reports back, and control returns to whichever primary agent you
+  were in.
+
+### Cycling primary agents: `Tab`
+
+**Tab** in the TUI cycles through primary agents:
+
+```
+Build → Architect → Chat → Plan → (back to Build)
+```
+
+| Agent | Origin | What it is |
+|---|---|---|
+| `build` | opencode built-in | The default — full edit + bash access, gated by this repo's permission rules. |
+| `plan` | opencode built-in | Can't edit real files (only its own plan-file path), can't delegate to `general`. |
+| `architect` | **added in this repo's `opencode.json`** | Can't edit anything, but *can* delegate freely — plans, then hands the edit to `fastfix`/`general` and the check to `reviewer`. |
+| `chat` | **added in this repo's `opencode.json`** | All tools denied, plain conversation — a workaround for PLGrid models without function-calling support (Bielik v2.6, PLLuM, QwQ-32B, Qwen3-VL). |
+
+opencode also runs three more built-in primaries internally
+(`compaction`, `summary`, `title` — context compaction, session
+summaries/titles) that don't appear on the Tab cycle; you never drive a
+session as one of them.
+
+### Calling subagents: `@name`, or delegation
+
+Subagents never show up on Tab, however you invoke them. Two ways to
+reach one:
+
+1. **Direct mention** — type `@researcher <question>` (or `@reviewer`,
+   `@fastfix`, `@general`, `@explore`) in the chat with whatever primary
+   agent you're currently in. It runs, reports back, and you're still in
+   `build` (or wherever you were) right afterward.
+2. **Delegation** — a primary agent with `task` permission hands work to
+   a subagent itself. `architect` does this by design; the built-in
+   slash commands do it too — `/explain` delegates to `researcher`,
+   `/review` delegates to `reviewer`.
+
+| Subagent | Origin | Can edit? | Can run bash? | Use it for |
+|---|---|---|---|---|
+| `researcher` | **added in this repo** | no | only `rg`/`grep`/`find`/`ls` | "explain what this code does" — file:line-grounded, can't touch anything. Introduced in [session1/06](session1/06-exercise-diagnosis.md). |
+| `reviewer` | **added in this repo** | no | no | a second, read-only pass over a diff before committing. Suggested in [session2/02](session2/02-exercise-algorithmic-optimization.md). |
+| `fastfix` | **added in this repo** | yes | yes (normal rules) | small, well-specified mechanical edits — fast model, tight brief. |
+| `general`, `explore` | opencode built-in | yes / read-heavy | yes | opencode's own general-purpose workhorses for delegated work or search. |
+
+### The mental model
+
+**Primary = who's "driving" right now** (Tab switches this). **Subagent
+= a tool the current driver reaches for** and gets control back from
+immediately after. If `@researcher` (or any other subagent) doesn't show
+up when you press Tab, that's not a missing config — subagents are
+defined with `"mode": "subagent"` in `opencode.json` specifically so
+they're never a driving seat, only a tool.
+
 ## Permission modes: allow / ask / deny
 
 Every tool call opencode wants to make (edit a file, run a shell command,
@@ -101,8 +162,9 @@ submission, secrets access), not from an empty permission block.
 ## Where this repo's config lives
 
 - `opencode.json` — model defaults, MCP servers, custom commands
-  (`/check`, `/review`, `/explain`), permission rules, and agent
-  definitions (`chat`, `reviewer`, `researcher`, `architect`, `fastfix`).
+  (`/check`, `/review`, `/explain`), permission rules, and the
+  project-specific agents from the section above (`chat`, `architect`,
+  `reviewer`, `researcher`, `fastfix`).
 - `AGENTS.md` — project-specific instructions loaded into every session
   automatically (see the [Rules docs](https://opencode.ai/docs/rules/)).
 - `.opencode/plugins/` — the plugin code the `opencode.json` config above
