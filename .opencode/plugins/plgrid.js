@@ -38,7 +38,7 @@ const MODELS = {
     "name": "DeepSeek V4 Flash",
     "tool_call": true,
     "limit": {
-      "context": 131072,
+      "context": 700000,
       "output": 16384
     }
   },
