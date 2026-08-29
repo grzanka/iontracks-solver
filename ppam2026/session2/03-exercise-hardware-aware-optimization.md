@@ -115,3 +115,57 @@ should this parallelize?"
    Jaffe-theory correctness check.
    ```
    </details>
+
+## Optional: is a GPU worth it here?
+
+Athena's nodes aren't CPU-only — each one also carries 8× NVIDIA
+A100-SXM4-40GB (see [setup](../session1/04-setup.md)). Nothing in
+`ion_chamber/solver.py` uses one today; both kernels are Numba
+`njit`/`prange` on CPU. If there's time left after the task above, the
+same hardware-aware question applies one level up: not just "how many
+CPU threads," but "is a GPU worth porting to at all, for this problem?"
+
+This needs a fresh allocation, not the one steps 1–4 ran in — GPUs are a
+`--gres` request, not something you add to a running job. From the
+access node:
+
+```bash
+srun -C memfs --time=2:00:00 -A tutorial -p tutorial --nodes=1 --ntasks-per-node=1 --cpus-per-task=16 --gres=gpu:1 --mem=120G --pty bash
+```
+
+Same flags as [the CPU-only `srun`](../session1/05-exercise-measurement.md),
+plus `--gres=gpu:1` — one GPU, and 16 CPU cores is already this node's
+actual per-GPU share (128 cores ÷ 8 GPUs). Ask an organizer if
+`--gres=gpu:1` doesn't actually hand you a GPU — the generic-resource
+name can vary between Slurm configs. Module load, venv, and `opencode`
+are unchanged from [session1/05](../session1/05-exercise-measurement.md).
+
+**opencode**, optional. Check what's actually there before reasoning
+about it — don't take the agent's answer without having it look first:
+
+<details>
+<summary>Example prompt</summary>
+
+```
+Confirm we actually have a GPU on this allocation (nvidia-smi, and
+whether numba.cuda.is_available() agrees), then look at insert_track
+and lax_wendroff_step and reason about whether porting either to the
+GPU would plausibly pay off here -- kernel launch overhead, data
+transfer, and the actual working-set size all matter, not just "GPUs
+are fast." Don't write any CUDA code yet, just the reasoning.
+```
+</details>
+
+The likely answer is worth sitting with rather than skipping past: at
+today's default grid (2.5 MiB, 91k tracks/pulse, ~1622 steps), the work
+per kernel launch is tiny next to a GPU's launch and transfer overhead —
+the same "problem too small for the parallelism" trap from this
+morning's thread-count question, one level up. Does that change at the
+full-detector scale from step 3 above (178 million tracks, ~730× the
+memory)? That's the more interesting question than whether it helps
+today.
+
+If the reasoning says it's genuinely worth trying, treat an actual port
+as a stretch goal, not a requirement — read the diff the same way as
+this afternoon's other change, and don't let a GPU experiment put the
+correctness check (step 4) at risk.
