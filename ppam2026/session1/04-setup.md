@@ -18,6 +18,9 @@
 
 - Tutorial accounts, valid for a few days, are provided to participants —
   they include access to Athena (including GPU nodes) and to LLM Lab.
+  Credentials — an account number and password per participant — are
+  distributed via Slack, posted once this first session starts; the
+  invite link to join the workspace is shared then too.
 - If you already have a PLGrid account with Athena and LLM Lab activated,
   these same materials work with that account instead.
 - You can also run everything on your own laptop, limited by whatever
@@ -39,10 +42,12 @@
 ssh tutorialXXX@athena.cyfronet.pl
 ```
 
-Replace `XXX` with the number you were given at registration. This drops
-you on the Athena **access node** — expect a banner and a shell prompt;
-don't run anything heavier than `git` or `curl` here, actual computation
-happens later on a worker node via `srun`.
+Replace `XXX` with the account number from the credentials posted in
+Slack (see [Accounts](#accounts) above). This drops you on the Athena
+**access node** — expect a
+banner and a shell prompt; don't run anything heavier than `git` or
+`curl` here, actual computation happens later on a worker node via
+`srun`.
 
 ### 2. Clone the exercise repo
 
@@ -126,17 +131,42 @@ The `plgrid` provider isn't a thing opencode knows about globally — it's
 defined by this repo's `opencode.json` and `.opencode/plugins/`, so the
 login command only works from inside the project directory.
 
-Grab your LLM Lab access token — organizers hand these out for tutorial
-accounts; on your own PLGrid account, generate one yourself at
+Grab your LLM Lab access token. For tutorial accounts, it's already
+waiting for you on Athena, in your home directory, in a file named after
+your own account number — `~/token-tutorial020.txt` for `tutorial020`,
+and so on:
+
+```bash
+cat ~/token-tutorialXXX.txt
+```
+
+On your own PLGrid account, generate one yourself instead at
 <https://llmlab.plgrid.pl> under **Grants → Generate API Key** (Forge must
-be activated first, at <https://portal.plgrid.pl/services/111>). Then run:
+be activated first, at <https://portal.plgrid.pl/services/111>).
+
+<details>
+<summary>This "token" isn't the same thing as an LLM's "tokens"</summary>
+
+The word means two unrelated things on this page. This access token —
+the string in `~/token-tutorialXXX.txt` — is a credential, like a
+password: it authenticates *you* to LLM Lab. The "tokens" in GLM 5.2's
+"1M-token context" ([step 5](#5-verify-it-can-see-the-models), below)
+are something else entirely — the units of text a model reads and
+generates, roughly word-sized chunks, with no secrecy involved at all.
+Same word, unrelated meaning; don't paste one where the other's
+expected.
+
+</details>
+
+Then run:
 
 ```bash
 opencode providers login -p plgrid
 ```
 
-Paste the token when prompted. opencode confirms the login and stores it
-for future sessions — you won't be asked again on this account.
+Paste the access token (from the file above, not a word count) when
+prompted. opencode confirms the login and stores it for future
+sessions — you won't be asked again on this account.
 
 If you run that command from anywhere outside the project (like your
 home directory right after logging back in), opencode has no idea what
@@ -164,6 +194,16 @@ opencode models plgrid
 Expect a list of PLGrid-hosted models. We'll use **GLM 5.2**
 (`zai-org/GLM-5.2-FP8`, 1M-token context, ~750 GB VRAM, comparable to
 Claude Sonnet in benchmarks) as the default.
+
+Also on the list: **DeepSeek V4 Flash** (`deepseek-ai/DeepSeek-V4-Flash-0731`)
+— a smaller, speed-oriented MoE variant, going by the "Flash" naming and
+DeepSeek's V3/R1 lineage (671B total / 37B active parameters). Nobody's
+published its actual card as of this writing, so treat the following as
+an estimate to verify, not a spec sheet: likely well under 37B active
+parameters (a "Flash" tier trades peak accuracy for throughput), a
+~700K-token context window, and noticeably lower VRAM than GLM 5.2's
+~750 GB. Feel free to try it if you want to compare against GLM 5.2 —
+just don't cite these numbers as fact.
 
 ### 6. Say hello to the agent
 

@@ -27,6 +27,21 @@
 const BASE_URL = "https://llmlab.plgrid.pl/api/v1"
 
 const MODELS = {
+  // GUESSED, not measured -- unlike every other entry in this object,
+  // this one was not checked against the live gateway (no confirmed
+  // max_model_len or function_calling_supported response for it as of
+  // this writing). context/output are placeholder estimates. Verify
+  // with `opencode models plgrid` and a real request before trusting
+  // these limits, and correct or remove this entry once actually
+  // measured.
+  "deepseek-ai/DeepSeek-V4-Flash-0731": {
+    "name": "DeepSeek V4 Flash",
+    "tool_call": true,
+    "limit": {
+      "context": 700000,
+      "output": 16384
+    }
+  },
   "zai-org/GLM-5.2-FP8": {
     "name": "GLM-5.2 FP8",
     "tool_call": true,

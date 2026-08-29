@@ -1,6 +1,6 @@
 # Reframing the question
 
-*[↑ Session 2](README.md) · Prev: — · [Next: Exercise: algorithmic optimization →](02-exercise-algorithmic-optimization.md)*
+*[↑ Session 2](README.md) · [← Prev: Session 1](../session1/07-opencode-cheatsheet.md) · [Next: Exercise: algorithmic optimization →](02-exercise-algorithmic-optimization.md)*
 
 Talking points before anyone reopens opencode.
 
@@ -52,6 +52,36 @@ there was a commit to reset to.
 compares against closed-form Jaffe theory, and its own docstring says it
 plainly — "if it drifts, the change broke the physics, not just the
 speed." Re-run it after every change, not just at the end.
+
+## Optional: plan first with `architect`
+
+`build` (opencode's default, used so far) can edit and run anything the
+permission rules allow. This repo's `opencode.json` also defines
+`architect` — a primary agent that literally cannot edit files
+(`write`/`edit`/`patch` are all disabled for it) and instead states a
+plan, then delegates the actual edit to a smaller model (`fastfix`, or
+the built-in `general` subagent) and a review pass to `reviewer`.
+
+Switch to it with **Tab** in the TUI (cycles through the primary agents:
+`build`, `plan`, `chat`, `architect`) — worth trying on one of this
+afternoon's two exercises, if you want to compare it against `build`'s
+direct approach:
+
+<details>
+<summary>Example prompt</summary>
+
+```
+insert_track is this morning's hot function. Plan the algorithmic fix --
+don't implement it yet, just state the plan -- then delegate the
+implementation.
+```
+</details>
+
+Nothing about the ground rules above changes: whatever `architect`
+delegates to still edits under the same permission rules, so you still
+read the diff and commit it yourself. The difference is only in *how*
+the change gets proposed — plan-then-delegate instead of one agent doing
+both. Not required for either exercise.
 
 ## What "faster" is actually for
 

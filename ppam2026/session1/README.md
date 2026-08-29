@@ -10,3 +10,4 @@ Materials for the first block, in the order they're meant to be used:
 4. [Setup](04-setup.md)
 5. [Exercise: measure before you optimize](05-exercise-measurement.md)
 6. [Exercise: diagnose before you optimize](06-exercise-diagnosis.md)
+7. [opencode cheatsheet](07-opencode-cheatsheet.md)

@@ -1,6 +1,6 @@
 # Exercise: diagnose before you optimize
 
-*[↑ Session 1](README.md) · [← Prev: Measure](05-exercise-measurement.md) · Next: —*
+*[↑ Session 1](README.md) · [← Prev: Measure](05-exercise-measurement.md) · [Next: opencode cheatsheet →](07-opencode-cheatsheet.md)*
 
 Picking up where [the previous file](05-exercise-measurement.md) left off:
 you should have a passing `pytest`, a `bench.py` baseline (wall time and
@@ -60,6 +60,31 @@ prompt often, and that's a feature, not friction: it's your chance to
 inspect every command before it runs and actually watch how the agent
 works, one step at a time, instead of taking the final answer on faith.
 
+## Meet `researcher`: read-only, for explanations rather than edits
+
+Everything below runs in whatever primary agent opencode started in
+(`build`, by default) — full edit and bash access, gated by the
+permission prompts above. This repo's `opencode.json` also defines
+`researcher`, a subagent that can't edit anything and can only run
+`rg`/`grep`/`find`/`ls` — it investigates and reports, citing `file:line`
+for what it actually found rather than what it assumes. Reach for it
+with `@researcher`, or the built-in `/explain` command, whenever the
+question is "what does this do and why" rather than "run this and show
+me the output":
+
+<details>
+<summary>Example prompt</summary>
+
+```
+@researcher explain what insert_track actually does, line by line, and
+every place in the codebase it's called from.
+```
+</details>
+
+There's no permission prompt to weigh here the way there is above — a
+subagent that can't edit or run anything beyond a read-only grep has
+nothing left to ask permission for.
+
 ## Task
 
 1. **opencode.** Profile the `bench.py` run — don't assume the
@@ -72,6 +97,19 @@ works, one step at a time, instead of taking the final answer on faith.
    Run bench.py under cProfile and summarize the top 10 functions by
    cumulative time. I want to know where the time goes, not just the
    total.
+   ```
+   </details>
+
+   Once that names a hot function, it's worth understanding *why* it's
+   expensive before drawing conclusions — switch to `@researcher` for
+   that (see above):
+
+   <details>
+   <summary>Example prompt</summary>
+
+   ```
+   @researcher explain what that function actually does and why it
+   would be expensive, without changing anything.
    ```
    </details>
 

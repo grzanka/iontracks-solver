@@ -97,3 +97,20 @@ converged simulation of a full chamber. That's deliberate: it keeps a
 correctness check and a full sweep fast enough to iterate on. The physics
 (stopping power, track structure, drift-diffusion-recombination) is real
 throughout.
+
+## Citation
+
+The physical model implemented here -- discrete Gaussian ion tracks
+advanced under coupled drift-diffusion-recombination -- follows the
+IonTracks simulator originally developed by Jeppe Brage Christensen et al.
+([source](https://github.com/jbrage/IonTracks)). If you use this code or
+its model, please cite:
+
+- Christensen, J. B., Tölli, H., & Bassler, N. (2016). A general algorithm
+  for calculation of recombination losses in ionization chambers exposed
+  to ion beams. *Medical Physics*, 43(10), 5484-5492.
+  https://doi.org/10.1118/1.4962483
+- Christensen, J. B., Almhagen, E., Stolarczyk, L., Liszka, M., Hernandez
+  Hernandez, G., Bassler, N., et al. (2020). Mapping initial and general
+  recombination in scanning proton pencil beams. *Physics in Medicine &
+  Biology*, 65(11), 115003. https://doi.org/10.1088/1361-6560/ab8579

@@ -39,6 +39,12 @@ The full tutorial writeup, including the detailed agenda below, is in
 
 ## Tutorial agenda
 
+> **Reference, used all day:** the
+> [opencode cheatsheet](session1/07-opencode-cheatsheet.md) — commands,
+> permission modes, and agent/subagent mechanics. Introduced partway
+> through session 1, but worth keeping open through every hands-on
+> block that follows, not just the morning's.
+
 **11:00–13:30 — Infrastructure, safety, and diagnosis**
 ([materials](session1/))
 
