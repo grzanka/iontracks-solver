@@ -1,6 +1,6 @@
 # Exercise: diagnose before you optimize
 
-*[↑ Session 1](README.md) · [← Prev: Measure](05-exercise-measurement.md) · Next: —*
+*[↑ Session 1](README.md) · [← Prev: Measure](05-exercise-measurement.md) · [Next: Session 2 →](../session2/01-reframing-the-question.md)*
 
 Picking up where [the previous file](05-exercise-measurement.md) left off:
 you should have a passing `pytest`, a `bench.py` baseline (wall time and

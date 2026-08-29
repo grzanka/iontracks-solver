@@ -1,6 +1,6 @@
 # Exercise: hardware-aware optimization
 
-*[↑ Session 2](README.md) · [← Prev: Exercise: algorithmic optimization](02-exercise-algorithmic-optimization.md) · Next: —*
+*[↑ Session 2](README.md) · [← Prev: Exercise: algorithmic optimization](02-exercise-algorithmic-optimization.md) · [Next: Session 3 →](../session3/01-solution-reveal-and-synthesis.md)*
 
 Continuing in the same opencode session as
 [the previous file](02-exercise-algorithmic-optimization.md) — no new

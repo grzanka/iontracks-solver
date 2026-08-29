@@ -1,6 +1,6 @@
 # Solution reveal and synthesis
 
-*[↑ Session 3](README.md) · Prev: — · [Next: Discussion: the agent's hardware reasoning →](02-hardware-reasoning-discussion.md)*
+*[↑ Session 3](README.md) · [← Prev: Session 2](../session2/03-exercise-hardware-aware-optimization.md) · [Next: Discussion: the agent's hardware reasoning →](02-hardware-reasoning-discussion.md)*
 
 Coffee break is over; nobody needs to be at a terminal for this block.
 
