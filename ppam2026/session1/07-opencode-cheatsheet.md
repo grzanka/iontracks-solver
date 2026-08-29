@@ -1,8 +1,11 @@
 # opencode cheatsheet
 
-*[↑ PPAM 2026 workshop](README.md) — reference material, not part of the
-agenda. Nothing here is required reading; dip in when a command or a
-config knob isn't obvious.*
+*[↑ Session 1](README.md) · [← Prev: Diagnose](06-exercise-diagnosis.md) · [Next: Session 2 →](../session2/01-reframing-the-question.md)*
+
+A reference doc, not a new exercise: commands, permission modes, and
+agent/subagent mechanics for everything used so far this morning,
+gathered in one place. Nothing here is a new ground rule; dip back in
+whenever a command or a config knob isn't obvious.
 
 ## Docs
 
@@ -78,8 +81,8 @@ reach one:
 
 | Subagent | Origin | Can edit? | Can run bash? | Use it for |
 |---|---|---|---|---|
-| `researcher` | **added in this repo** | no | only `rg`/`grep`/`find`/`ls` | "explain what this code does" — file:line-grounded, can't touch anything. Introduced in [session1/06](session1/06-exercise-diagnosis.md). |
-| `reviewer` | **added in this repo** | no | no | a second, read-only pass over a diff before committing. Suggested in [session2/02](session2/02-exercise-algorithmic-optimization.md). |
+| `researcher` | **added in this repo** | no | only `rg`/`grep`/`find`/`ls` | "explain what this code does" — file:line-grounded, can't touch anything. Introduced in [session1/06](06-exercise-diagnosis.md). |
+| `reviewer` | **added in this repo** | no | no | a second, read-only pass over a diff before committing. Suggested in [session2/02](../session2/02-exercise-algorithmic-optimization.md). |
 | `fastfix` | **added in this repo** | yes | yes (normal rules) | small, well-specified mechanical edits — fast model, tight brief. |
 | `general`, `explore` | opencode built-in | yes / read-heavy | yes | opencode's own general-purpose workhorses for delegated work or search. |
 
@@ -118,8 +121,8 @@ still block**, so `--auto` is not "no permissions at all" — but it *is*
 "no human sees this before it runs," which is exactly the property that
 makes an agent dangerous on a shared account.
 
-**Today's rule (see [session1's ground rules](session1/03-agent-safety-rules.md)):
-nobody runs `--auto` or enables auto-approve.** Concretely, on Athena that
+**Today's rule (see [the ground rules](03-agent-safety-rules.md)): nobody
+runs `--auto` or enables auto-approve.** Concretely, on Athena that
 means:
 
 - A malformed or runaway `sbatch` on a shared allocation isn't

@@ -1,6 +1,6 @@
 # Reframing the question
 
-*[↑ Session 2](README.md) · [← Prev: Session 1](../session1/06-exercise-diagnosis.md) · [Next: Exercise: algorithmic optimization →](02-exercise-algorithmic-optimization.md)*
+*[↑ Session 2](README.md) · [← Prev: Session 1](../session1/07-opencode-cheatsheet.md) · [Next: Exercise: algorithmic optimization →](02-exercise-algorithmic-optimization.md)*
 
 Talking points before anyone reopens opencode.
 

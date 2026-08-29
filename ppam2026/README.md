@@ -63,6 +63,9 @@ The full tutorial writeup, including the detailed agenda below, is in
   sweep, plot wall time and speedup vs. thread count, explain the shape" —
   and write a short diagnosis based on the output.
   ([exercise](session1/05-exercise-measurement.md))
+- Reference: an opencode cheatsheet — commands, permission modes, and
+  agent/subagent mechanics for everything used this morning.
+  ([cheatsheet](session1/07-opencode-cheatsheet.md))
 
 **14:20–16:00 — Optimization: algorithmic and hardware-aware**
 ([materials](session2/))
@@ -110,7 +113,4 @@ Tutorials day at the Lecture Center of the Poznań University of Technology.
 - [`workshop-EuroCC3-HPC.pdf`](workshop-EuroCC3-HPC.pdf) — abstract and agenda
   (the source for this page)
 - [Top-level README](../README.md) — the solver, the task, and how to run it
-- [opencode cheatsheet](opencode-cheatsheet.md) — commands, permission
-  modes, and security notes (including `--auto`), for reference during the
-  day; not part of the agenda
 - [PPAM 2026 conference site](https://ppam.edu.pl/)
