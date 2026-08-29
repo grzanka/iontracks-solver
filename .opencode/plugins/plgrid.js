@@ -35,7 +35,7 @@ const MODELS = {
   // these limits, and correct or remove this entry once actually
   // measured.
   "deepseek-ai/DeepSeek-V4-Flash-0731": {
-    "name": "DeepSeek V4 Flash (unverified)",
+    "name": "DeepSeek V4 Flash",
     "tool_call": true,
     "limit": {
       "context": 131072,
