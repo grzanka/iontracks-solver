@@ -131,17 +131,42 @@ The `plgrid` provider isn't a thing opencode knows about globally — it's
 defined by this repo's `opencode.json` and `.opencode/plugins/`, so the
 login command only works from inside the project directory.
 
-Grab your LLM Lab access token — organizers hand these out for tutorial
-accounts; on your own PLGrid account, generate one yourself at
+Grab your LLM Lab access token. For tutorial accounts, it's already
+waiting for you on Athena, in your home directory, in a file named after
+your own account number — `~/token-tutorial020.txt` for `tutorial020`,
+and so on:
+
+```bash
+cat ~/token-tutorialXXX.txt
+```
+
+On your own PLGrid account, generate one yourself instead at
 <https://llmlab.plgrid.pl> under **Grants → Generate API Key** (Forge must
-be activated first, at <https://portal.plgrid.pl/services/111>). Then run:
+be activated first, at <https://portal.plgrid.pl/services/111>).
+
+<details>
+<summary>This "token" isn't the same thing as an LLM's "tokens"</summary>
+
+The word means two unrelated things on this page. This access token —
+the string in `~/token-tutorialXXX.txt` — is a credential, like a
+password: it authenticates *you* to LLM Lab. The "tokens" in GLM 5.2's
+"1M-token context" ([step 5](#5-verify-it-can-see-the-models), below)
+are something else entirely — the units of text a model reads and
+generates, roughly word-sized chunks, with no secrecy involved at all.
+Same word, unrelated meaning; don't paste one where the other's
+expected.
+
+</details>
+
+Then run:
 
 ```bash
 opencode providers login -p plgrid
 ```
 
-Paste the token when prompted. opencode confirms the login and stores it
-for future sessions — you won't be asked again on this account.
+Paste the access token (from the file above, not a word count) when
+prompted. opencode confirms the login and stores it for future
+sessions — you won't be asked again on this account.
 
 If you run that command from anywhere outside the project (like your
 home directory right after logging back in), opencode has no idea what
