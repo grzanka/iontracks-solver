@@ -19,8 +19,9 @@
 - Tutorial accounts, valid for a few days, are provided to participants —
   they include access to Athena (including GPU nodes) and to LLM Lab.
   Credentials aren't handed out at registration — they're distributed
-  via Slack instead, as an account number and password per participant;
-  the invite link to join the workspace is shared during the session.
+  via Slack instead, as an account number and password per participant,
+  posted once this first session starts; the invite link to join the
+  workspace is shared then too.
 - If you already have a PLGrid account with Athena and LLM Lab activated,
   these same materials work with that account instead.
 - You can also run everything on your own laptop, limited by whatever
