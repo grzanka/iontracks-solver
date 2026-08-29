@@ -18,6 +18,19 @@ simulator seeds the grid with discrete Gaussian tracks (one per proton) and
 integrates the coupled drift-diffusion-recombination PDE with explicit
 Lax-Wendroff finite differences.
 
+This model -- and the original IonTracks code it's derived from
+([jbrage/IonTracks](https://github.com/jbrage/IonTracks)) -- comes from
+Jeppe Brage Christensen's work:
+
+- Christensen, J. B., Tölli, H., & Bassler, N. (2016). A general algorithm
+  for calculation of recombination losses in ionization chambers exposed
+  to ion beams. *Medical Physics*, 43(10), 5484-5492.
+  https://doi.org/10.1118/1.4962483
+- Christensen, J. B., Almhagen, E., Stolarczyk, L., Liszka, M., Hernandez
+  Hernandez, G., Bassler, N., et al. (2020). Mapping initial and general
+  recombination in scanning proton pencil beams. *Physics in Medicine &
+  Biology*, 65(11), 115003. https://doi.org/10.1088/1361-6560/ab8579
+
 ## Scales that matter
 
 These are the actual numbers behind the default config
