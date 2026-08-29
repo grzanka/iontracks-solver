@@ -39,6 +39,12 @@ The full tutorial writeup, including the detailed agenda below, is in
 
 ## Tutorial agenda
 
+> **Reference, used all day:** the
+> [opencode cheatsheet](session1/07-opencode-cheatsheet.md) — commands,
+> permission modes, and agent/subagent mechanics. Introduced partway
+> through session 1, but worth keeping open through every hands-on
+> block that follows, not just the morning's.
+
 **11:00–13:30 — Infrastructure, safety, and diagnosis**
 ([materials](session1/))
 
@@ -63,9 +69,6 @@ The full tutorial writeup, including the detailed agenda below, is in
   sweep, plot wall time and speedup vs. thread count, explain the shape" —
   and write a short diagnosis based on the output.
   ([exercise](session1/05-exercise-measurement.md))
-- Reference: an opencode cheatsheet — commands, permission modes, and
-  agent/subagent mechanics for everything used this morning.
-  ([cheatsheet](session1/07-opencode-cheatsheet.md))
 
 **14:20–16:00 — Optimization: algorithmic and hardware-aware**
 ([materials](session2/))
