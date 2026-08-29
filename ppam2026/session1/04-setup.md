@@ -195,6 +195,16 @@ Expect a list of PLGrid-hosted models. We'll use **GLM 5.2**
 (`zai-org/GLM-5.2-FP8`, 1M-token context, ~750 GB VRAM, comparable to
 Claude Sonnet in benchmarks) as the default.
 
+Also on the list: **DeepSeek V4 Flash** (`deepseek-ai/DeepSeek-V4-Flash-0731`)
+— a smaller, speed-oriented MoE variant, going by the "Flash" naming and
+DeepSeek's V3/R1 lineage (671B total / 37B active parameters). Nobody's
+published its actual card as of this writing, so treat the following as
+an estimate to verify, not a spec sheet: likely well under 37B active
+parameters (a "Flash" tier trades peak accuracy for throughput), a
+128K–256K context window, and noticeably lower VRAM than GLM 5.2's
+~750 GB. Feel free to try it if you want to compare against GLM 5.2 —
+just don't cite these numbers as fact.
+
 ### 6. Say hello to the agent
 
 Listing models only confirms opencode knows they exist — it doesn't
