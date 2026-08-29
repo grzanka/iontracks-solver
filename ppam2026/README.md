@@ -110,4 +110,7 @@ Tutorials day at the Lecture Center of the Poznań University of Technology.
 - [`workshop-EuroCC3-HPC.pdf`](workshop-EuroCC3-HPC.pdf) — abstract and agenda
   (the source for this page)
 - [Top-level README](../README.md) — the solver, the task, and how to run it
+- [opencode cheatsheet](opencode-cheatsheet.md) — commands, permission
+  modes, and security notes (including `--auto`), for reference during the
+  day; not part of the agenda
 - [PPAM 2026 conference site](https://ppam.edu.pl/)
