@@ -168,10 +168,56 @@ LMOD_PAGER=cat module spider 'Python'
 </details>
 
 We'll use `3.13.5` for the rest of this exercise; any newer version you
-spot works just as well:
+spot works just as well. Lets check what is needed to load that Python module:
 
 ```bash
-module load GCC Python/3.13.5
+module spider Python/3.13.5
+```
+
+<details>
+<summary>Expected output</summary>
+
+```
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Python: Python/3.13.5
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    Description:
+      Python is a programming language that lets you work more quickly and integrate your systems more effectively.
+
+
+    You will need to load all module(s) on any one of the lines below before the "Python/3.13.5" module is available to load.
+
+      GCCcore/14.3.0
+ 
+    This module provides the following extensions:
+
+       flit_core/3.12.0 (E), packaging/25.0 (E), pip/25.1.1 (E), setuptools/80.9.0 (E), setuptools_scm/8.3.1 (E), tomli/2.2.1 (E), typing_extensions/4.14.0 (E), wheel/0.45.1 (E)
+
+    Help:
+      
+      Description
+      ===========
+      Python is a programming language that lets you work more quickly and integrate your systems
+       more effectively.
+      
+      
+      More information
+      ================
+       - Homepage: https://python.org/
+      
+      
+      Included extensions
+      ===================
+      flit_core-3.12.0, packaging-25.0, pip-25.1.1, setuptools-80.9.0,
+      setuptools_scm-8.3.1, tomli-2.2.1, typing_extensions-4.14.0, wheel-0.45.1
+```
+
+</details>
+
+We need to load proper GCC compiler before loading Python:
+
+```bash  
+module load GCC/14.3.0 Python/3.13.5
 ```
 
 ```bash
@@ -226,7 +272,7 @@ ones. Your prompt gains a `(venv)` prefix:
 </details>
 
 ```bash
-pip install -e ".[dev]"
+pip install --no-cache-dir -e ".[dev]"
 ```
 
 Installs this repo into the venv in **editable** mode (`-e`) — code
